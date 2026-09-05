@@ -1,0 +1,30 @@
+{
+  "name": "@social-capital/api",
+  "version": "0.1.0",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "start": "tsx src/index.ts",
+    "keeper": "tsx src/scripts/keeper.ts"
+  },
+  "dependencies": {
+    "@fastify/cors": "^8.5.0",
+    "@fastify/rate-limit": "^9.1.0",
+    "@fastify/websocket": "^8.3.1",
+    "@social-capital/db": "workspace:*",
+    "dotenv": "^16.4.5",
+    "drizzle-orm": "^0.30.9",
+    "fastify": "^4.26.2",
+    "jsonwebtoken": "^9.0.3",
+    "tsx": "^4.7.2",
+    "twitter-api-v2": "^1.29.1",
+    "unique-names-generator": "^4.7.1",
+    "viem": "2.35.0"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/node": "^20.0.0",
+    "@types/ws": "^8.18.1",
+    "typescript": "^5.0.0"
+  }
+}

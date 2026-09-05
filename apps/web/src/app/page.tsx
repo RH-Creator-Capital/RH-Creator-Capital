@@ -149,15 +149,10 @@ export default function LandingPage() {
               <span className="w-2 h-2 rounded-full bg-color-buy animate-pulse" />
               RH Creator Capital is live on Robinhood Chain
             </div>
-            {process.env.NEXT_PUBLIC_PSC_MINT_ADDRESS && (
-              <a 
-                href={`https://pump.fun/coin/${process.env.NEXT_PUBLIC_PSC_MINT_ADDRESS}`} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-color-muted hover:bg-white/10 transition-colors hover:text-white"
-              >
-                CA: {process.env.NEXT_PUBLIC_PSC_MINT_ADDRESS}
-              </a>
+            {process.env.NEXT_PUBLIC_RH_CREATOR_CAPITAL_ADDRESS && (
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-mono font-medium text-color-muted">
+                CA: {process.env.NEXT_PUBLIC_RH_CREATOR_CAPITAL_ADDRESS}
+              </div>
             )}
           </div>
           
@@ -216,8 +211,8 @@ export default function LandingPage() {
               {[...markets]
                 .sort((a: any, b: any) => Number(b.totalVolumeWei) - Number(a.totalVolumeWei))
                 .slice(0, 8)
-                .map((market: any) => (
-                  <MarketCard key={market.marketId} market={market} />
+                .map((market: any, idx: number) => (
+                  <MarketCard key={market.marketId ?? idx} market={market} />
                 ))}
             </div>
           </section>
@@ -317,7 +312,7 @@ export default function LandingPage() {
             <h2 className="text-2xl font-bold text-white uppercase tracking-widest">Live Onchain Metrics</h2>
           </div>
           
-          <div className={`grid grid-cols-2 md:grid-cols-3 ${process.env.NEXT_PUBLIC_SOLANA_NETWORK === 'mainnet-beta' ? 'lg:grid-cols-3 max-w-4xl' : 'lg:grid-cols-6 max-w-full'} gap-8 w-full mx-auto`}>
+          <div className={`grid grid-cols-2 md:grid-cols-3 ${process.env.NEXT_PUBLIC_RH_NETWORK === 'mainnet' ? 'lg:grid-cols-3 max-w-4xl' : 'lg:grid-cols-6 max-w-full'} gap-8 w-full mx-auto`}>
             {(() => {
               const totalMarkets = data?.markets?.length || 0;
               const totalTvl = (data?.markets?.reduce((acc: number, m: any) => acc + Number(m.reserveWei), 0) / 1e18 || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -332,7 +327,7 @@ export default function LandingPage() {
                     <div className="absolute top-0 right-0 w-24 h-24 bg-white/5 rounded-full blur-[30px] -mr-8 -mt-8 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     <div className="relative z-10">
                       <p className="text-white/40 text-xs mb-2 font-medium tracking-widest uppercase group-hover:text-white/70 transition-colors">Total Volume</p>
-                      <p className="text-3xl font-medium text-white/90 tracking-tight">{totalVol} <span className="text-sm font-normal text-white/40">SOL</span></p>
+                      <p className="text-3xl font-medium text-white/90 tracking-tight">{totalVol} <span className="text-sm font-normal text-white/40">ETH</span></p>
                     </div>
                   </div>
                   <div className="group text-center p-6 bg-white/[0.02] border border-white/[0.03] rounded-2xl hover:bg-white/[0.04] hover:border-white/[0.08] transition-colors duration-300 relative overflow-hidden">
@@ -349,7 +344,8 @@ export default function LandingPage() {
                       <p className="text-3xl font-medium text-white/90 tracking-tight">{totalHolders.toLocaleString()}</p>
                     </div>
                   </div>
-                  {process.env.NEXT_PUBLIC_SOLANA_NETWORK !== 'mainnet-beta' && (
+                  
+                  {process.env.NEXT_PUBLIC_RH_NETWORK !== 'mainnet' && (
                     <>
                       <div className="group text-center p-6 bg-white/[0.02] border border-white/[0.03] rounded-2xl hover:bg-white/[0.04] hover:border-white/[0.08] transition-colors duration-300 relative overflow-hidden">
                         <div className="absolute top-0 right-0 w-24 h-24 bg-white/5 rounded-full blur-[30px] -mr-8 -mt-8 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -419,7 +415,7 @@ export default function LandingPage() {
 
         {/* Live On Robinhood Chain Devnet (Proof) */}
         <section className="py-24 border-t border-white/5 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-8 uppercase tracking-wide">Live On Robinhood Chain {process.env.NEXT_PUBLIC_SOLANA_NETWORK === 'mainnet-beta' ? 'Mainnet' : 'Devnet'}</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-8 uppercase tracking-wide">Live On Robinhood Chain {process.env.NEXT_PUBLIC_RH_NETWORK === 'mainnet' ? 'Mainnet' : 'Devnet'}</h2>
           <div className="max-w-2xl mx-auto space-y-8">
             <p className="text-white/60 text-lg font-light leading-relaxed">
               Every Creator Key trade settles on Robinhood Chain. Markets, trades and creator activity can be independently verified onchain. No simulated transactions. No offchain market settlement.
@@ -428,21 +424,21 @@ export default function LandingPage() {
             <div className="group bg-white/[0.02] border border-white/[0.03] p-6 rounded-2xl inline-flex flex-col items-center gap-4 hover:bg-white/[0.04] hover:border-white/[0.08] transition-colors duration-300 relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-[40px] -mr-10 -mt-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative z-10 text-center">
-                <div className="text-xs text-white/40 uppercase tracking-widest font-medium mb-2">Program ID</div>
+                <div className="text-xs text-white/40 uppercase tracking-widest font-medium mb-2">Contract Address</div>
                 <div className="font-mono text-white/90 text-sm md:text-base break-all px-4 bg-black/40 py-2 rounded-lg border border-white/5 group-hover:border-white/10 transition-colors">
-                  {process.env.NEXT_PUBLIC_PROGRAM_ID}
+                  {process.env.NEXT_PUBLIC_RH_CREATOR_CAPITAL_ADDRESS || 'Deploying...'}
                 </div>
               </div>
             </div>
             
             <div className="flex flex-col sm:flex-row justify-center gap-4 mt-8">
               <a 
-                href={`https://solscan.io/account/${process.env.NEXT_PUBLIC_PROGRAM_ID}${process.env.NEXT_PUBLIC_SOLANA_NETWORK === 'mainnet-beta' ? '' : '?cluster=' + process.env.NEXT_PUBLIC_SOLANA_NETWORK}`} 
+                href={`${process.env.NEXT_PUBLIC_EXPLORER_URL}/address/${process.env.NEXT_PUBLIC_RH_CREATOR_CAPITAL_ADDRESS || ''}`} 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="bg-white/5 border border-white/10 text-white/90 font-medium px-6 py-3 rounded-full hover:bg-white/10 transition-colors text-sm"
               >
-                View Program on Blockscout
+                View Contract on Blockscout
               </a>
             </div>
           </div>

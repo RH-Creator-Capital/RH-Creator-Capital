@@ -29,7 +29,7 @@ export default function ProfilePage({ params }: PageProps) {
   const [successMsg, setSuccessMsg] = useState("");
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL as string;
-  const network = process.env.NEXT_PUBLIC_SOLANA_NETWORK as string;
+  const network = 'robinhood';
   
   const { data, error, isLoading: profileLoading, mutate: mutateProfile } = useSWR(
     `${API_URL}/api/users/${address}/markets?network=${network}`, 
@@ -240,7 +240,7 @@ export default function ProfilePage({ params }: PageProps) {
                         +{(w.amount / 1e18).toFixed(4)} ETH
                       </div>
                       <a 
-                        href={`https://solscan.io/tx/${w.signature}?cluster=${network}`} 
+                        href={`${process.env.NEXT_PUBLIC_EXPLORER_URL}/tx/${w.signature}`} 
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="text-[10px] bg-emerald-500/10 text-emerald-400 px-1.5 py-0.5 rounded flex items-center justify-end gap-1 hover:bg-emerald-500/20 transition-colors mt-1 inline-flex"

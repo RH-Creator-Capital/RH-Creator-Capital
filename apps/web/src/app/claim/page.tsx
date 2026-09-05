@@ -343,7 +343,7 @@ export default function ClaimPage() {
         creatorIdArray[i] = textBytes[i];
       }
 
-      // Get the PDA so we can redirect to the creator page
+      // Get the Address so we can redirect to the creator page
       const marketId = sdk.getMarketId(twitterHandle);
 
       // Check market state first
@@ -637,13 +637,13 @@ export default function ClaimPage() {
                 <span className="text-white">{new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
               </div>
               <div className="flex justify-between items-center text-sm border-b border-color-border/30 pb-2">
-                <span className="text-color-muted">Market PDA</span>
+                <span className="text-color-muted">Market Address</span>
                 <span className="text-white font-mono">{createdMarketPda.slice(0,8)}...{createdMarketPda.slice(-8)}</span>
               </div>
               {createdTxSig && (
                 <div className="flex justify-between items-center text-sm border-b border-color-border/30 pb-2">
                   <span className="text-color-muted">Transaction</span>
-                  <a href={`https://solscan.io/tx/${createdTxSig}?cluster=devnet`} target="_blank" rel="noopener noreferrer" className="text-color-buy hover:underline font-mono">
+                  <a href={`${process.env.NEXT_PUBLIC_EXPLORER_URL}/tx/${createdTxSig}`} target="_blank" rel="noopener noreferrer" className="text-color-buy hover:underline font-mono">
                     {createdTxSig.slice(0,6)}...{createdTxSig.slice(-6)}
                   </a>
                 </div>

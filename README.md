@@ -633,7 +633,7 @@ Recommended index:
 
 All financial values should remain integer-based in backend storage.
 
-Convert lamports to SOL only at the presentation layer.
+Convert wei to ETH only at the presentation layer.
 
 ---
 
@@ -1137,7 +1137,7 @@ The MVP is ready for internal Devnet testing when:
 - Candles update from real Robinhood Chain trades
 - Market stats update in realtime
 - Portfolio updates after trades
-- Transactions can be opened on Solscan
+- Transactions can be opened on the Robinhood Chain Explorer
 
 ---
 

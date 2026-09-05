@@ -15,10 +15,10 @@ export const TokensHeldTable: React.FC<TokensHeldTableProps> = ({ positions }) =
           <table className="w-full text-left text-sm">
             <thead>
               <tr className="text-color-muted border-b border-color-border">
-                <th className="pb-4 pl-4 lg:pl-8 font-medium">Creator PDA</th>
+                <th className="pb-4 pl-4 lg:pl-8 font-medium">Creator Address</th>
                 <th className="pb-4 font-medium">Balance (Keys)</th>
-                <th className="pb-4 font-medium">Total Value (SOL)</th>
-                <th className="pb-4 pr-4 lg:pr-8 font-medium">PnL (SOL)</th>
+                <th className="pb-4 font-medium">Total Value (ETH)</th>
+                <th className="pb-4 pr-4 lg:pr-8 font-medium">PnL (ETH)</th>
               </tr>
             </thead>
             <tbody className="text-white">

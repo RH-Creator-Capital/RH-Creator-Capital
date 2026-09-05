@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { db, creatorMarkets, feeWithdrawals, users } from "@social-capital/db";
-import { desc, eq, and, or, sum } from "drizzle-orm";
+import { desc, eq, and, or, sql } from "drizzle-orm";
 
 export const usersRoutes = async (fastify: FastifyInstance) => {
   fastify.get("/:address/markets", async (request, reply) => {
@@ -31,7 +31,7 @@ export const usersRoutes = async (fastify: FastifyInstance) => {
 
       // Fetch total withdrawn fees for this user
       const totalFeesResult = await db
-        .select({ total: sum(feeWithdrawals.amountWei) })
+        .select({ total: sql`sum(cast(${feeWithdrawals.amountWei} as numeric))` })
         .from(feeWithdrawals)
         .where(
           and(
@@ -57,7 +57,7 @@ export const usersRoutes = async (fastify: FastifyInstance) => {
         userProfile,
         markets,
         stats: {
-          totalFeesWithdrawn: totalFeesWei / 1e9 // Convert to SOL
+          totalFeesWithdrawn: totalFeesWei / 1e18 // Convert to ETH
         },
         withdrawals
       });

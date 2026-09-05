@@ -13,6 +13,7 @@ import { portfolioRoutes } from "./routes/portfolio";
 import { protocolRoutes } from "./routes/protocol";
 import { websocketRoutes } from "./routes/websocket";
 import { usersRoutes } from "./routes/users";
+import { startIndexer } from "./indexer";
 
 dotenv.config({ path: resolve(__dirname, "../../../.env") });
 
@@ -47,6 +48,11 @@ const start = async () => {
     const port = parseInt(process.env.PORT);
     await fastify.listen({ port, host: '0.0.0.0' });
     fastify.log.info(`Server listening on port ${port}`);
+
+    // Start blockchain indexer background service
+    startIndexer().catch(err => {
+      fastify.log.error("Indexer failed to start:", err);
+    });
 
   } catch (err) {
     fastify.log.error(err);

@@ -1,11 +1,10 @@
 import { FastifyInstance, FastifyPluginAsync } from "fastify";
 import { db, userPositions, creatorMarkets, tradeHistory } from "@social-capital/db";
 import { eq, inArray, and } from "drizzle-orm";
-const network = process.env.SOLANA_NETWORK as string;
-
-const K_CONSTANT = 100_000n; // 0.0001 SOL in ethAmountWei
+const K_CONSTANT = 100_000n; // 0.0001 ETH in ethAmountWei
 
 export const portfolioRoutes: FastifyPluginAsync = async (fastify: FastifyInstance) => {
+  const network = process.env.RH_NETWORK as string;
   fastify.get("/:wallet", async (request, reply) => {
     const { wallet } = request.params as { wallet: string };
     

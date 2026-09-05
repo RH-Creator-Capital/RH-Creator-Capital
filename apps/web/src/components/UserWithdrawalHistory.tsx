@@ -99,8 +99,8 @@ export const UserWithdrawalHistoryComponent = ({ address }: { address?: string }
           <thead>
             <tr className="border-b border-color-border text-color-muted text-sm uppercase">
               <th className="py-3 font-semibold">Time</th>
-              <th className="py-3 font-semibold">Amount (SOL)</th>
-              <th className="py-3 font-semibold">Market PDA</th>
+              <th className="py-3 font-semibold">Amount (ETH)</th>
+              <th className="py-3 font-semibold">Market Address</th>
               <th className="py-3 font-semibold">Transaction</th>
             </tr>
           </thead>
@@ -134,7 +134,7 @@ export const UserWithdrawalHistoryComponent = ({ address }: { address?: string }
           <tr className="border-b border-color-border text-color-muted text-sm uppercase">
             <th className="py-3 font-semibold">Time</th>
             <th className="py-3 font-semibold">Amount (SOL)</th>
-            <th className="py-3 font-semibold">Market PDA</th>
+            <th className="py-3 font-semibold">Market Address</th>
             <th className="py-3 font-semibold">Transaction</th>
           </tr>
         </thead>
@@ -156,7 +156,7 @@ export const UserWithdrawalHistoryComponent = ({ address }: { address?: string }
                   </Link>
                 </td>
                 <td className="py-3 text-color-muted">
-                  <a href={`https://solscan.io/tx/${w.signature}${process.env.NEXT_PUBLIC_SOLANA_NETWORK === 'devnet' ? '?cluster=devnet' : ''}`} target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:text-indigo-300 flex items-center gap-1">
+                  <a href={`${process.env.NEXT_PUBLIC_EXPLORER_URL}/tx/${w.signature}`} target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:text-indigo-300 flex items-center gap-1">
                     {w.signature.slice(0, 4)}...{w.signature.slice(-4)}
                     <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                   </a>

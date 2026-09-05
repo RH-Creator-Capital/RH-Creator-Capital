@@ -6,6 +6,8 @@ import { verifyMessage } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
 import jwt from "jsonwebtoken";
 import { uniqueNamesGenerator, adjectives, colors, animals, NumberDictionary } from "unique-names-generator";
+import { viemClient } from "../indexer";
+import { rhCreatorCapitalAbi } from "../abis/rhCreatorCapital";
 
 // Custom Web3 dictionary
 
@@ -326,16 +328,21 @@ export const authRoutes: FastifyPluginAsync = async (fastify: FastifyInstance) =
       const account = privateKeyToAccount(backendSecretKeyString.startsWith('0x') ? backendSecretKeyString as `0x${string}` : `0x${backendSecretKeyString}`);
       const deadline = BigInt(Math.floor(Date.now() / 1000) + 3600); // 1 hour validity
 
-      // Note: We assume the contract nonce is 0 for simplicity in this lean MVP,
-      // or you can track nonces in the DB if multiple claims per user are allowed.
-      // Since creator claim is one-time per market, we just set nonce to 0 for MVP.
-      const claimNonce = BigInt(0);
+      // Fetch the current nonce directly from the Smart Contract
+      const contractAddress = process.env.RH_CREATOR_CAPITAL_ADDRESS as `0x${string}`;
+      const currentNonce = await viemClient.readContract({
+        address: contractAddress,
+        abi: rhCreatorCapitalAbi,
+        functionName: 'nonces',
+        args: [wallet as `0x${string}`]
+      });
+      const claimNonce = BigInt(currentNonce as bigint);
 
       const domain = {
         name: 'RHCreatorCapital',
         version: '1',
         chainId: Number(process.env.CHAIN_ID),
-        verifyingContract: process.env.CONTRACT_ADDRESS as `0x${string}`,
+        verifyingContract: contractAddress,
       };
 
       const types = {

@@ -31,7 +31,7 @@ export default function ProtocolDashboard() {
   const keeperLogs = logsData?.keeperLogs || [];
   const recentFees = logsData?.recentFees || [];
 
-  const network = process.env.NEXT_PUBLIC_SOLANA_NETWORK as string;
+  const network = 'robinhood';
 
   if (isLoading) {
     return (
@@ -122,7 +122,7 @@ export default function ProtocolDashboard() {
                     <div className="flex flex-col">
                       <span className="text-white font-mono text-sm font-semibold">+{formatEth(fee.amount)} ETH</span>
                       <a 
-                        href={`https://solscan.io/tx/${fee.signature}${network === 'devnet' ? '?cluster=devnet' : ''}`} 
+                        href={`${process.env.NEXT_PUBLIC_EXPLORER_URL}/tx/${fee.signature}`} 
                         target="_blank" 
                         rel="noreferrer" 
                         className="text-color-buy hover:underline text-xs flex items-center gap-1 transition-colors mt-0.5"

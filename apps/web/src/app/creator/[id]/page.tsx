@@ -306,7 +306,7 @@ export default function CreatorPage({ params }: PageProps) {
           <div className="text-color-muted text-base mt-1 mb-2">@{handleUrl}</div>
           <div className="flex items-center gap-1.5 mt-1 mb-2">
             <a 
-              href={`https://solscan.io/account/${id}${process.env.NEXT_PUBLIC_SOLANA_NETWORK === 'devnet' ? '?cluster=devnet' : ''}`} 
+              href={`${process.env.NEXT_PUBLIC_EXPLORER_URL}/address/${id}`} 
               target="_blank" 
               rel="noopener noreferrer"
               title="View on Blockscout"
@@ -502,12 +502,12 @@ export default function CreatorPage({ params }: PageProps) {
                 </div>
                 
                 <div className="flex justify-between items-center">
-                  <span className="text-color-muted">Curve PDA</span>
+                  <span className="text-color-muted">Curve Address</span>
                   <button 
                     onClick={() => {
                       if (id) {
                         navigator.clipboard.writeText(id as string);
-                        toast.success("Curve PDA copied!");
+                        toast.success("Curve Address copied!");
                       }
                     }}
                     className="font-mono text-white hover:text-color-buy transition-colors"
@@ -556,7 +556,7 @@ export default function CreatorPage({ params }: PageProps) {
                   <div className="flex justify-between items-center">
                     <span className="text-color-muted">Create TX</span>
                     <a 
-                      href={`https://explorer.solana.com/tx/${dbMarket.createTxSignature}?cluster=devnet`} 
+                      href={`${process.env.NEXT_PUBLIC_EXPLORER_URL}/tx/${dbMarket.createTxSignature}`} 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="font-mono text-white hover:text-color-buy transition-colors"
@@ -570,7 +570,7 @@ export default function CreatorPage({ params }: PageProps) {
                   <div className="flex justify-between items-center">
                     <span className="text-color-muted">Claim TX</span>
                     <a 
-                      href={`https://explorer.solana.com/tx/${dbMarket.claimTxSignature}?cluster=devnet`} 
+                      href={`${process.env.NEXT_PUBLIC_EXPLORER_URL}/tx/${dbMarket.claimTxSignature}`} 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="font-mono text-white hover:text-color-buy transition-colors"

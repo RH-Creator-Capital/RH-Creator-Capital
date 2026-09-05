@@ -36,30 +36,30 @@ export default function DocsPage() {
           The platform uses a Robinhood Chain-first architecture. The API server is fast but the Robinhood Chain program is always the single source of truth for balances and final pricing.
         </p>
         <div className="bg-[#07090c] border border-white/10 p-6 rounded-xl font-mono text-sm text-color-buy overflow-x-auto">
-          Wallet → Frontend → API Server → Robinhood Chain RPC → Anchor Program → Helius Webhook → Indexer → Postgres/Redis → Realtime WebSocket
+          Wallet → Frontend → API Server → Robinhood Chain RPC → Smart Contract → EVM Events → Indexer → Postgres/Redis → Realtime WebSocket
         </div>
       </section>
 
       {/* 3. Smart Contracts */}
       <section id="smart-contracts" className="scroll-mt-32 space-y-6">
-        <h2 className="text-3xl font-bold text-white">3. Smart Contracts (Anchor)</h2>
+        <h2 className="text-3xl font-bold text-white">3. Smart Contracts (Solidity)</h2>
         <p className="leading-relaxed">
-          The main program is `rh_creator_capital`. It utilizes Program Account Ledgers instead of standard SPL tokens for efficiency.
+          The main contract is `CreatorCapital`. It utilizes internal accounting ledgers instead of standard ERC20 tokens for efficiency before graduation.
         </p>
         
-        <h3 className="text-xl font-bold text-white mt-6">Key PDAs</h3>
+        <h3 className="text-xl font-bold text-white mt-6">Core Data Structures</h3>
         <div className="space-y-4">
           <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-            <h4 className="font-bold text-color-buy mb-2">Protocol Config PDA <code>["protocol"]</code></h4>
+            <h4 className="font-bold text-color-buy mb-2">Protocol Config</h4>
             <p className="text-sm">Holds authority, treasury, and global fee BPS settings.</p>
           </div>
           <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-            <h4 className="font-bold text-color-buy mb-2">Creator Market PDA <code>["creator_market", creator_id]</code></h4>
+            <h4 className="font-bold text-color-buy mb-2">Market Mapping <code>markets[creator_id]</code></h4>
             <p className="text-sm">Maintains supply, reserve wei, total volume, and specific creator fee settings. Uses immutable X ID.</p>
           </div>
           <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-            <h4 className="font-bold text-color-buy mb-2">User Position PDA <code>["position", market, wallet]</code></h4>
-            <p className="text-sm">Tracks exact key balances and PnL data per user per market without needing an SPL token mint.</p>
+            <h4 className="font-bold text-color-buy mb-2">User Position Mapping <code>positions[market][wallet]</code></h4>
+            <p className="text-sm">Tracks exact key balances and PnL data per user per market without needing an ERC20 token mint.</p>
           </div>
         </div>
       </section>
@@ -89,7 +89,7 @@ export default function DocsPage() {
               <li>Read current supply.</li>
               <li>Calculate exact curve cost.</li>
               <li>Calculate creator & protocol fees.</li>
-              <li>Validate cost &lt;= `max_sol_cost`.</li>
+              <li>Validate cost &lt;= `max_eth_cost`.</li>
               <li>Transfer ETH, route fees to vaults.</li>
               <li>Increase user balance and market supply.</li>
               <li>Emit `KeysPurchased` event.</li>
@@ -101,7 +101,7 @@ export default function DocsPage() {
               <li>Validate key balance.</li>
               <li>Calculate return based on supply.</li>
               <li>Calculate fees.</li>
-              <li>Validate net &gt;= `min_sol_received`.</li>
+              <li>Validate net &gt;= `min_eth_received`.</li>
               <li>Reduce supply and balance.</li>
               <li>Transfer ETH to seller.</li>
               <li>Emit `KeysSold` event.</li>
@@ -120,8 +120,8 @@ export default function DocsPage() {
           <h3 className="text-2xl font-semibold text-white mb-4">Bonding Curve Fees (Before Graduation)</h3>
           <p className="text-color-muted mb-4">While your token is on the bonding curve, every trade generates a flat 1.25% fee.</p>
           <ul className="list-disc pl-6 space-y-2 mb-6">
-            <li><strong>Creator Fee:</strong> 0.30% - Routed to Creator Fee Vault PDA.</li>
-            <li><strong>Protocol Fee:</strong> 0.95% - Routed to Protocol Treasury PDA.</li>
+            <li><strong>Creator Fee:</strong> 0.30% - Routed to Creator Fee Vault.</li>
+            <li><strong>Protocol Fee:</strong> 0.95% - Routed to Protocol Treasury.</li>
             <li><strong>Total Fee:</strong> 1.25%</li>
           </ul>
         </div>
@@ -133,7 +133,7 @@ export default function DocsPage() {
             <table className="w-full text-left border-collapse text-sm">
               <thead className="bg-[#161A22]">
                 <tr className="border-b border-white/10 text-color-muted">
-                  <th className="py-3 px-4 font-medium">Market Cap (SOL)</th>
+                  <th className="py-3 px-4 font-medium">Market Cap (ETH)</th>
                   <th className="py-3 px-4 font-medium text-color-buy">Creator Fee</th>
                   <th className="py-3 px-4 font-medium">Protocol Fee</th>
                   <th className="py-3 px-4 font-medium">LP Fee</th>
@@ -193,7 +193,7 @@ export default function DocsPage() {
         </p>
         <ul className="list-disc pl-6 space-y-2">
           <li><strong>Stack:</strong> Node.js, Fastify, PostgreSQL (Drizzle), Redis, BullMQ.</li>
-          <li><strong>Indexing:</strong> Listens to Anchor events via Helius Webhooks. Validates signatures and decodes events to update Postgres.</li>
+          <li><strong>Indexing:</strong> Listens to Smart Contract events via RPC (e.g., eth_getLogs). Validates and decodes events to update Postgres.</li>
           <li><strong>WebSockets:</strong> Pushes updates (trade, price_update, supply_update) to clients in under 2 seconds.</li>
         </ul>
       </section>

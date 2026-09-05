@@ -145,7 +145,7 @@ export const UserTradeHistoryComponent = ({ address }: { address?: string }) => 
                   {timeAgo}
                 </td>
                 <td className="py-3 pr-4 lg:pr-8 text-color-muted">
-                  <a href={`https://solscan.io/tx/${trade.signature}${process.env.NEXT_PUBLIC_SOLANA_NETWORK === 'devnet' ? '?cluster=devnet' : ''}`} target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:text-indigo-300 flex items-center gap-1">
+                  <a href={`${process.env.NEXT_PUBLIC_EXPLORER_URL}/tx/${trade.signature}`} target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:text-indigo-300 flex items-center gap-1">
                     {trade.signature.slice(0, 4)}...{trade.signature.slice(-4)}
                     <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                   </a>

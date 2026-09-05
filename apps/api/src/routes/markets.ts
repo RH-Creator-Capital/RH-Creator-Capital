@@ -2,9 +2,8 @@ import { FastifyInstance, FastifyPluginAsync } from "fastify";
 import { db, creatorMarkets } from "@social-capital/db";
 import { sql, desc, eq, and } from "drizzle-orm";
 
-const network = process.env.SOLANA_NETWORK as string;
-
 export const marketRoutes: FastifyPluginAsync = async (fastify: FastifyInstance) => {
+  const network = process.env.RH_NETWORK as string;
   fastify.get("/", async (request, reply) => {
     try {
       const markets = await db.query.creatorMarkets.findMany({
@@ -12,13 +11,13 @@ export const marketRoutes: FastifyPluginAsync = async (fastify: FastifyInstance)
         orderBy: [desc(creatorMarkets.createdAt)],
         limit: 50,
       });
-      const pdas = markets.map(m => m.marketId);
+      const marketIds = markets.map(m => m.marketId);
       
       let holderCounts: Record<string, number> = {};
       let sparklines: Record<string, number[]> = {};
       
-      if (pdas.length > 0) {
-        const inClause = sql.join(pdas.map(p => sql`${p}`), sql`, `);
+      if (marketIds.length > 0) {
+        const inClause = sql.join(marketIds.map(p => sql`${p}`), sql`, `);
         
         // Fetch holder counts
         const counts = await db.execute(sql`

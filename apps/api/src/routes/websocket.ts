@@ -6,7 +6,7 @@ export const websocketRoutes: FastifyPluginAsync = async (fastify: FastifyInstan
   fastify.get("/", { websocket: true }, (connection, req) => {
     fastify.log.info("Client connected to WebSocket");
     
-    // Store subscribed market PDAs
+    // Store subscribed market addresses
     const subscriptions = new Set<string>();
 
     const onTrade = (data: any) => {

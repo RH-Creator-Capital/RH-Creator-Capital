@@ -1,9 +1,8 @@
 import { FastifyInstance, FastifyPluginAsync } from "fastify";
 import { db, protocolFees, pscBuybacks, pscBurns, activityLogs } from "@social-capital/db";
 import { sum, desc, eq, and, sql } from "drizzle-orm";
-const network = process.env.EVM_NETWORK || "devnet";
-
 export const protocolRoutes: FastifyPluginAsync = async (fastify: FastifyInstance) => {
+  const network = process.env.RH_NETWORK || "devnet";
   fastify.get("/stats", async (request, reply) => {
     try {
       // Aggregate Protocol Fees

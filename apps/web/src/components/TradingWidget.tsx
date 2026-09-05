@@ -357,7 +357,7 @@ export const TradingWidget: FC<{ marketId: string, twitterHandle?: string }> = (
                <div className="ml-11 mb-6 flex items-center gap-2">
                  <span className="text-color-foreground font-mono text-xs break-all flex-1">{modalSignature}</span>
                  <a 
-                   href={`https://solscan.io/tx/${modalSignature}${process.env.NEXT_PUBLIC_SOLANA_NETWORK === 'devnet' ? '?cluster=devnet' : ''}`}
+                   href={`${process.env.NEXT_PUBLIC_EXPLORER_URL}/tx/${modalSignature}`}
                    target="_blank"
                    rel="noopener noreferrer"
                    title="View on Blockscout"

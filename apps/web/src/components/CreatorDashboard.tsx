@@ -108,7 +108,7 @@ export const CreatorDashboard = ({ marketId, creatorWallet, claimed, twitterHand
 
     const fetchDashboardData = async () => {
       try {
-        const pda = marketId;
+        const address = marketId;
         const feeVaultPda = sdk.getMarketId("some_twitter_handle_fallback");
         
         // Fetch vault balance directly from chain (or fallback to 0 for now since we removed connection)
@@ -376,7 +376,7 @@ export const CreatorDashboard = ({ marketId, creatorWallet, claimed, twitterHand
           <table className="w-full text-sm">
             <tbody>
               <tr className="border-b border-amber-500/10">
-                <td className="py-2 text-amber-200/70">Market PDA</td>
+                <td className="py-2 text-amber-200/70">Market Address</td>
                 <td className="py-2 text-white font-mono text-xs text-right">{marketId.slice(0, 8)}...{marketId.slice(-8)}</td>
               </tr>
               <tr className="border-b border-amber-500/10">
@@ -485,7 +485,7 @@ export const CreatorDashboard = ({ marketId, creatorWallet, claimed, twitterHand
                 <span className="text-gray-400">{new Date(w.timestamp).toLocaleDateString()}</span>
                 <span className="text-emerald-400 font-medium">+{Number(w.amount / 1e18).toFixed(4)}</span>
                 <a 
-                  href={`https://solscan.io/tx/${w.signature}${process.env.NEXT_PUBLIC_SOLANA_NETWORK === 'devnet' ? '?cluster=devnet' : ''}`} 
+                  href={`${process.env.NEXT_PUBLIC_EXPLORER_URL}/tx/${w.signature}`} 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-indigo-400 hover:text-indigo-300 flex items-center gap-1"
@@ -540,7 +540,7 @@ export const CreatorDashboard = ({ marketId, creatorWallet, claimed, twitterHand
               <div className="ml-11 mb-6 flex items-center gap-2">
                 <span className="text-color-foreground font-mono text-xs break-all flex-1">{withdrawModalSignature}</span>
                 <a 
-                  href={`https://solscan.io/tx/${withdrawModalSignature}${process.env.NEXT_PUBLIC_SOLANA_NETWORK === 'devnet' ? '?cluster=devnet' : ''}`}
+                  href={`${process.env.NEXT_PUBLIC_EXPLORER_URL}/tx/${withdrawModalSignature}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   title="View on Blockscout"

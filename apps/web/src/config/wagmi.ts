@@ -12,7 +12,7 @@ export const robinhoodChain = defineChain({
     default: { http: [process.env.NEXT_PUBLIC_RPC_URL as string] },
   },
   blockExplorers: {
-    default: { name: 'Blockscout', url: 'https://explorer.devnet.robinhood.chain' },
+    default: { name: 'Blockscout', url: process.env.NEXT_PUBLIC_EXPLORER_URL as string },
   }
 });
 

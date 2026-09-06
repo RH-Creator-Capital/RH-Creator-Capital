@@ -1,5 +1,5 @@
 "use client";
-
+import { useState } from "react";
 import Link from "next/link";
 import useSWR from "swr";
 import { MarketCard, Market } from "@/components/MarketCard";
@@ -8,6 +8,7 @@ import { UserMarquee } from "@/components/UserMarquee";
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function LandingPage() {
+  const [copied, setCopied] = useState(false);
   const { data } = useSWR(
     `${process.env.NEXT_PUBLIC_API_URL}/api/markets`, 
     fetcher
@@ -152,9 +153,21 @@ export default function LandingPage() {
               RH Creator Capital is live on Robinhood Chain
             </div>
             {process.env.NEXT_PUBLIC_TOKEN_CA && (
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-mono font-medium text-color-muted">
+              <button 
+                onClick={() => {
+                  navigator.clipboard.writeText(process.env.NEXT_PUBLIC_TOKEN_CA || "");
+                  setCopied(true);
+                  setTimeout(() => setCopied(false), 2000);
+                }}
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-mono font-medium text-color-muted hover:text-white hover:bg-white/10 hover:border-white/20 transition-all cursor-pointer"
+              >
                 CA: {process.env.NEXT_PUBLIC_TOKEN_CA}
-              </div>
+                {copied ? (
+                  <svg className="w-3 h-3 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
+                ) : (
+                  <svg className="w-3 h-3 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                )}
+              </button>
             )}
           </div>
           

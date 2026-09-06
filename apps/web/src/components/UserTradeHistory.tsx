@@ -5,7 +5,7 @@ import { useAppKit, useAppKitAccount } from "@reown/appkit/react";
 import { useSignMessage } from "wagmi";
 
 interface UserTrade {
-  signature: string;
+  txHash: string;
   marketId: string;
   traderWallet: string;
   tradeType: string;
@@ -124,7 +124,7 @@ export const UserTradeHistoryComponent = ({ address }: { address?: string }) => 
             const avatarUrl = trade.marketDetails?.avatarUrl || `https://api.dicebear.com/10.x/bottts/svg?seed=${trade.marketId}`;
 
             return (
-              <tr key={trade.signature} className="border-b border-color-border/50 hover:bg-white/5 transition-colors">
+              <tr key={trade.txHash} className="border-b border-color-border/50 hover:bg-white/5 transition-colors">
                 <td className={`py-3 pl-4 lg:pl-8 font-medium ${isBuy ? 'text-color-buy' : 'text-color-sell'}`}>
                   {isBuy ? 'BUY' : 'SELL'}
                 </td>
@@ -145,8 +145,8 @@ export const UserTradeHistoryComponent = ({ address }: { address?: string }) => 
                   {timeAgo}
                 </td>
                 <td className="py-3 pr-4 lg:pr-8 text-color-muted">
-                  <a href={`${process.env.NEXT_PUBLIC_EXPLORER_URL}/tx/${trade.signature}`} target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:text-indigo-300 flex items-center gap-1">
-                    {trade.signature.slice(0, 4)}...{trade.signature.slice(-4)}
+                  <a href={`${process.env.NEXT_PUBLIC_EXPLORER_URL}/tx/${trade.txHash}`} target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:text-indigo-300 flex items-center gap-1">
+                    {trade.txHash.slice(0, 6)}...{trade.txHash.slice(-4)}
                     <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                   </a>
                 </td>

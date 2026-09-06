@@ -6,7 +6,7 @@ export const usersRoutes = async (fastify: FastifyInstance) => {
   fastify.get("/:address/markets", async (request, reply) => {
     try {
       const { address } = request.params as { address: string };
-      const network = (request.query as any).network || "devnet";
+      const network = process.env.RH_NETWORK || (request.query as any).network || "mainnet";
 
       if (!address) {
         return reply.status(400).send({ success: false, error: "Address is required" });

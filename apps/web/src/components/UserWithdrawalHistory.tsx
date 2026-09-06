@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 interface UserWithdrawal {
   id: string;
-  signature: string;
+  txHash: string;
   marketId: string;
   creatorWallet: string;
   amount: number;
@@ -146,7 +146,7 @@ export const UserWithdrawalHistoryComponent = ({ address }: { address?: string }
             const marketName = w.marketDetails?.twitterHandle || "Unknown Creator";
 
             return (
-              <tr key={w.signature} className="border-b border-[#1A1F2B] hover:bg-[#161A22] transition-colors">
+              <tr key={w.txHash} className="border-b border-[#1A1F2B] hover:bg-[#161A22] transition-colors">
                 <td className="py-3 text-white whitespace-nowrap">{timeAgo}</td>
                 <td className="py-3 font-medium text-green-400">+{amountSol}</td>
                 <td className="py-3 font-semibold hover:underline">
@@ -156,8 +156,8 @@ export const UserWithdrawalHistoryComponent = ({ address }: { address?: string }
                   </Link>
                 </td>
                 <td className="py-3 text-color-muted">
-                  <a href={`${process.env.NEXT_PUBLIC_EXPLORER_URL}/tx/${w.signature}`} target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:text-indigo-300 flex items-center gap-1">
-                    {w.signature.slice(0, 4)}...{w.signature.slice(-4)}
+                  <a href={`${process.env.NEXT_PUBLIC_EXPLORER_URL}/tx/${w.txHash}`} target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:text-indigo-300 flex items-center gap-1">
+                    {w.txHash.slice(0, 6)}...{w.txHash.slice(-4)}
                     <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                   </a>
                 </td>

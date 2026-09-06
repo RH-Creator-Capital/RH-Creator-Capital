@@ -1,7 +1,6 @@
 import { FastifyInstance, FastifyPluginAsync } from "fastify";
 import { db, userPositions, creatorMarkets, tradeHistory } from "@creator-capital/db";
 import { eq, inArray, and } from "drizzle-orm";
-const K_CONSTANT = 100_000n; // 0.0001 ETH in ethAmountWei
 
 export const portfolioRoutes: FastifyPluginAsync = async (fastify: FastifyInstance) => {
   const network = process.env.RH_NETWORK as string;
@@ -33,8 +32,14 @@ export const portfolioRoutes: FastifyPluginAsync = async (fastify: FastifyInstan
         const market = marketMap.get(pos.marketId);
         const supply = BigInt(market ? market.supply : 0);
         
-        // Spot Price = K_CONSTANT * supply^2
-        const spotPrice = K_CONSTANT * (supply ** 2n);
+        // Exact Spot Price calculation matching contract (friend.tech curve)
+        const s = supply;
+        const a = 1n;
+        const sum1 = s === 0n ? 0n : (s - 1n) * s * (2n * s - 1n) / 6n;
+        const sum2 = s === 0n && a === 1n ? 0n : (s - 1n + a) * (s + a) * (2n * (s + a) - 1n) / 6n;
+        const summation = sum2 - sum1;
+        const ether = 1000000000000000000n;
+        const spotPrice = (summation * ether) / 16000n;
         
         // Auto-correct negative keyBalance in DB (self-heal corrupted data)
         const clampedKeyBalance = Math.max(0, pos.keyBalance);

@@ -149,9 +149,9 @@ export default function LandingPage() {
               <span className="w-2 h-2 rounded-full bg-color-buy animate-pulse" />
               RH Creator Capital is live on Robinhood Chain
             </div>
-            {process.env.NEXT_PUBLIC_RH_CREATOR_CAPITAL_ADDRESS && (
+            {process.env.NEXT_PUBLIC_TOKEN_CA && (
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-mono font-medium text-color-muted">
-                CA: {process.env.NEXT_PUBLIC_RH_CREATOR_CAPITAL_ADDRESS}
+                CA: {process.env.NEXT_PUBLIC_TOKEN_CA}
               </div>
             )}
           </div>
@@ -424,7 +424,7 @@ export default function LandingPage() {
             <div className="group bg-white/[0.02] border border-white/[0.03] p-6 rounded-2xl inline-flex flex-col items-center gap-4 hover:bg-white/[0.04] hover:border-white/[0.08] transition-colors duration-300 relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-[40px] -mr-10 -mt-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative z-10 text-center">
-                <div className="text-xs text-white/40 uppercase tracking-widest font-medium mb-2">Contract Address</div>
+                <div className="text-xs text-white/40 uppercase tracking-widest font-medium mb-2">Protocol Contract Address</div>
                 <div className="font-mono text-white/90 text-sm md:text-base break-all px-4 bg-black/40 py-2 rounded-lg border border-white/5 group-hover:border-white/10 transition-colors">
                   {process.env.NEXT_PUBLIC_RH_CREATOR_CAPITAL_ADDRESS || 'Deploying...'}
                 </div>
@@ -438,7 +438,7 @@ export default function LandingPage() {
                 rel="noopener noreferrer" 
                 className="bg-white/5 border border-white/10 text-white/90 font-medium px-6 py-3 rounded-full hover:bg-white/10 transition-colors text-sm"
               >
-                View Contract on Blockscout
+                View Protocol on Blockscout
               </a>
             </div>
           </div>

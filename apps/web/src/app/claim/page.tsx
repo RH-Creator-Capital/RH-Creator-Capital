@@ -63,12 +63,32 @@ export default function ClaimPage() {
   const [isAvatarUploading, setIsAvatarUploading] = useState(false);
   const [avatarUploadError, setAvatarUploadError] = useState<string | null>(null);
   const [uploadedAvatarName, setUploadedAvatarName] = useState("");
-  const [initialBuyAmount, setInitialBuyAmount] = useState("");
+  const [initialBuyAmount, setInitialBuyAmount] = useState("1");
   const [creationMode, setCreationMode] = useState<"oauth" | "manual">("oauth");
-  const [category, setCategory] = useState("Regular User");
+  const [category, setCategory] = useState("Influencers");
   const [xProfileUrl, setXProfileUrl] = useState("");
   
   const CATEGORIES = ["Regular User", "Crypto", "Streamers", "Influencers", "Athletes", "Business", "Actors", "Celebrities", "Politicians", "Musicians", "Creatives", "Companies"];
+
+  const executeInitialBuy = async (mId: string, toastId: string) => {
+    const parsedBuyAmount = Number(initialBuyAmount);
+    if (parsedBuyAmount > 0) {
+      toast.loading(`Buying ${parsedBuyAmount} initial key(s)...`, { id: toastId });
+      try {
+         const a = BigInt(parsedBuyAmount);
+         const sum2 = a === BigInt(1) ? BigInt(0) : (a - BigInt(1)) * a * (BigInt(2) * a - BigInt(1)) / BigInt(6);
+         const baseCostEth = Number(sum2) / 16000;
+         const totalCostEth = baseCostEth * 1.0125; // 1.25% fee
+         const valueWei = BigInt(Math.ceil(totalCostEth * 1e18));
+         
+         await sdk.buyKeys(mId, parsedBuyAmount, valueWei);
+         toast.success(`Successfully bought ${parsedBuyAmount} key(s)!`, { id: toastId });
+      } catch (e) {
+         console.error("Initial buy failed:", e);
+         toast.error("Market created, but initial buy failed. You can buy keys on the market page.");
+      }
+    }
+  };
 
   const handleClaim = async (): Promise<boolean> => {
     if (!publicKey || !signMessage) {
@@ -390,6 +410,7 @@ export default function ClaimPage() {
               body: JSON.stringify({
                 createTxSignature: typeof createTxSig === 'string' ? createTxSig : undefined,
                 createdBy: publicKey,
+                twitterHandle,
                 ticker,
                 description,
                 websiteUrl,
@@ -420,6 +441,7 @@ export default function ClaimPage() {
         if (!isXLinked) {
           setStatus("SUCCESS");
           toast.success(`Market Created! The owner can claim it later via OAuth.`, { id: loadingId });
+          await executeInitialBuy(marketId, loadingId);
           setCreatedMarketPda(marketId);
           return;
         }
@@ -497,6 +519,7 @@ export default function ClaimPage() {
 
         setStatus("SUCCESS");
         toast.success(`Market Claimed Successfully!`, { id: loadingId });
+        await executeInitialBuy(marketId, loadingId);
         setCreatedMarketPda(marketId);
         if (typeof txSig === 'string') setCreatedTxSig(txSig);
       } else {

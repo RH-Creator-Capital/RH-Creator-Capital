@@ -228,4 +228,68 @@ export const marketRoutes: FastifyPluginAsync = async (fastify: FastifyInstance)
       return reply.status(500).send({ success: false, error: "Failed to check handle" });
     }
   });
+  fastify.post("/:marketId/sync", async (request, reply) => {
+    try {
+      const { marketId } = request.params as { marketId: string };
+      const body = request.body as any;
+      
+      let market = await db.query.creatorMarkets.findFirst({
+        where: and(eq(creatorMarkets.network, network), eq(creatorMarkets.marketId, marketId))
+      });
+
+      if (!market) {
+        if (body && body.twitterHandle && body.createdBy) {
+          await db.insert(creatorMarkets).values({
+            network,
+            marketId,
+            creatorIdHex: marketId,
+            twitterHandle: body.twitterHandle,
+            creatorWallet: body.createdBy,
+            createdBy: body.createdBy,
+            ticker: body.ticker || "",
+            description: body.description,
+            websiteUrl: body.websiteUrl,
+            telegramUrl: body.telegramUrl,
+            bannerUrl: body.bannerUrl,
+            twitterName: body.twitterName,
+            avatarUrl: body.avatarUrl,
+            category: body.category || "Regular User",
+            createTxHash: body.createTxSignature,
+            isActive: true,
+          });
+          market = await db.query.creatorMarkets.findFirst({
+            where: and(eq(creatorMarkets.network, network), eq(creatorMarkets.marketId, marketId))
+          });
+        } else {
+          return reply.status(404).send({ success: false, error: "Market not found and missing initial data" });
+        }
+      } else if (body && Object.keys(body).length > 0) {
+         await db.update(creatorMarkets)
+          .set({
+            ...(body.ticker !== undefined ? { ticker: body.ticker } : {}),
+            ...(body.websiteUrl !== undefined ? { websiteUrl: body.websiteUrl } : {}),
+            ...(body.telegramUrl !== undefined ? { telegramUrl: body.telegramUrl } : {}),
+            ...(body.description !== undefined ? { description: body.description } : {}),
+            ...(body.bannerUrl !== undefined ? { bannerUrl: body.bannerUrl } : {}),
+            ...(body.twitterName !== undefined ? { twitterName: body.twitterName } : {}),
+            ...(body.avatarUrl !== undefined ? { avatarUrl: body.avatarUrl } : {}),
+            ...(body.category !== undefined ? { category: body.category } : {}),
+            ...(body.createdBy !== undefined ? { createdBy: body.createdBy } : {}),
+            ...(body.createTxSignature !== undefined ? { createTxHash: body.createTxSignature } : {}),
+            updatedAt: new Date()
+          })
+          .where(
+            and(
+              eq(creatorMarkets.network, network),
+              eq(creatorMarkets.marketId, marketId)
+            )
+          );
+      }
+
+      return reply.send({ success: true, message: "Market synced." });
+    } catch (err) {
+      fastify.log.error(err);
+      return reply.status(500).send({ success: false, error: "Failed to sync market." });
+    }
+  });
 };

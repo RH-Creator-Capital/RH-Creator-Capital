@@ -334,7 +334,10 @@ export const CreatorDashboard = ({ marketId, creatorWallet, claimed, twitterHand
         await fetch(`${apiUrl}/api/markets/${marketId}/sync`, { 
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ claimTxSignature: typeof claimTxSig === 'string' ? claimTxSig : undefined })
+          body: JSON.stringify({ 
+            claimTxSignature: typeof claimTxSig === 'string' ? claimTxSig : undefined,
+            creatorWallet: publicKey
+          })
         });
       } catch (e) {
         console.error("Failed to sync after claim:", e);

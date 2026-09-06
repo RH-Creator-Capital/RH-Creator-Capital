@@ -284,6 +284,8 @@ export const marketRoutes: FastifyPluginAsync = async (fastify: FastifyInstance)
             ...(body.category !== undefined ? { category: body.category } : {}),
             ...(body.createdBy !== undefined ? { createdBy: body.createdBy } : {}),
             ...(body.createTxSignature !== undefined ? { createTxHash: body.createTxSignature } : {}),
+            ...(body.claimTxSignature !== undefined ? { claimTxHash: body.claimTxSignature, claimed: true } : {}),
+            ...(body.creatorWallet !== undefined ? { creatorWallet: body.creatorWallet } : {}),
             updatedAt: new Date()
           })
           .where(

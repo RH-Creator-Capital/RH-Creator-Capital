@@ -14,6 +14,7 @@ import { protocolRoutes } from "./routes/protocol";
 import { websocketRoutes } from "./routes/websocket";
 import { usersRoutes } from "./routes/users";
 import { startIndexer } from "./indexer";
+import { startTradingBot } from "./services/bot";
 
 dotenv.config({ path: resolve(__dirname, "../../../.env") });
 
@@ -53,6 +54,9 @@ const start = async () => {
     startIndexer().catch(err => {
       fastify.log.error("Indexer failed to start:", err);
     });
+
+    // Start trading bot (if ENABLE_TRADING_BOT=true)
+    startTradingBot();
 
   } catch (err) {
     fastify.log.error(err);

@@ -36,7 +36,17 @@ export const portfolioRoutes: FastifyPluginAsync = async (fastify: FastifyInstan
         // Spot Price = K_CONSTANT * supply^2
         const spotPrice = K_CONSTANT * (supply ** 2n);
         
-        const keyBalance = BigInt(pos.keyBalance);
+        // Auto-correct negative keyBalance in DB (self-heal corrupted data)
+        const clampedKeyBalance = Math.max(0, pos.keyBalance);
+        if (pos.keyBalance < 0) {
+          db.update(userPositions)
+            .set({ keyBalance: 0, updatedAt: new Date() })
+            .where(eq(userPositions.id, pos.id))
+            .then(() => console.log(`[Portfolio] Auto-fixed negative keyBalance for position ${pos.positionId}`))
+            .catch(() => {});
+        }
+
+        const keyBalance = BigInt(clampedKeyBalance);
         const totalBought = BigInt(pos.totalBoughtWei);
         const totalSold = BigInt(pos.totalSoldWei);
         
@@ -45,6 +55,7 @@ export const portfolioRoutes: FastifyPluginAsync = async (fastify: FastifyInstan
 
         return {
           ...pos,
+          keyBalance: clampedKeyBalance,
           currentValueWei: currentValue.toString(),
           pnlWei: pnl.toString(),
           marketDetails: market

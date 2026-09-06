@@ -273,8 +273,8 @@ export async function handleKeysSold(log: any) {
 
     if (existingPos) {
       await db.update(userPositions)
-        .set({ 
-          keyBalance: existingPos.keyBalance - Number(keyAmount),
+        .set({           
+          keyBalance: Math.max(0, existingPos.keyBalance - Number(keyAmount)),
           totalSoldWei: (BigInt(existingPos.totalSoldWei) + BigInt(ethReceived)).toString(),
           updatedAt: new Date()
         })

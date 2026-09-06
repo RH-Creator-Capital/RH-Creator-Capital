@@ -262,7 +262,7 @@ export const TradingWidget: FC<{ marketId: string, twitterHandle?: string }> = (
                 className="text-[11px] font-semibold text-color-muted hover:text-white transition-colors bg-white/5 hover:bg-white/10 px-2 py-0.5 rounded-md flex items-center gap-1 cursor-pointer"
                 title="Click to max"
               >
-                Balance: <span className="text-white">{keyBalance}</span> KEYS
+                Keys Owned: <span className="text-white">{keyBalance}</span>
               </button>
             )}
           </div>

@@ -225,6 +225,17 @@ export async function handleKeysBought(log: any) {
       feeWei: protocolFee.toString()
     }).onConflictDoNothing();
 
+    realtimeEmitter.emit("trade", {
+      marketId,
+      txHash,
+      traderWallet: buyer,
+      tradeType: "buy",
+      amount: Number(keyAmount),
+      ethAmountWei: ethAmount.toString(),
+      feeWei: protocolFee.toString(),
+      timestamp: new Date().toISOString()
+    });
+
     await db.execute(sql`
       UPDATE creator_markets 
       SET supply = ${Number(newSupply)}, 
@@ -280,6 +291,17 @@ export async function handleKeysSold(log: any) {
       ethAmountWei: ethReceived.toString(),
       feeWei: protocolFee.toString()
     }).onConflictDoNothing();
+
+    realtimeEmitter.emit("trade", {
+      marketId,
+      txHash,
+      traderWallet: seller,
+      tradeType: "sell",
+      amount: Number(keyAmount),
+      ethAmountWei: ethReceived.toString(),
+      feeWei: protocolFee.toString(),
+      timestamp: new Date().toISOString()
+    });
 
     await db.execute(sql`
       UPDATE creator_markets 

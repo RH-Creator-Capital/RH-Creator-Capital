@@ -14,11 +14,11 @@ export const users = pgTable("users", {
 export const creatorMarkets = pgTable("creator_markets", {
   id: uuid("id").primaryKey().defaultRandom(),
   network: text("network").notNull().default("devnet"),
-  twitterHandle: text("twitter_handle").unique().notNull(), // The raw Twitter handle string
+  twitterHandle: text("twitter_handle").notNull(), // The raw Twitter handle string
   twitterName: text("twitter_name"), // Display name from Twitter
-  creatorIdHex: text("creator_id_hex").unique().notNull(), // The 32-byte hash/id
+  creatorIdHex: text("creator_id_hex").notNull(), // The 32-byte hash/id
   creatorWallet: text("creator_wallet").notNull(),
-  marketId: text("market_id").unique().notNull(), // Replaced marketPda with marketId
+  marketId: text("market_id").notNull(), // Replaced marketPda with marketId
   ticker: text("ticker").notNull().default(""), // Ticker symbol
   websiteUrl: text("website_url"),
   telegramUrl: text("telegram_url"),
@@ -37,25 +37,31 @@ export const creatorMarkets = pgTable("creator_markets", {
   claimTxHash: text("claim_tx_hash"), // Transaction hash for market claim
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
+}, (t) => ({
+  unqTwitter: unique("creator_markets_twitter_handle_network_unique").on(t.network, t.twitterHandle),
+  unqCreatorId: unique("creator_markets_creator_id_hex_network_unique").on(t.network, t.creatorIdHex),
+  unqMarketId: unique("creator_markets_market_id_network_unique").on(t.network, t.marketId),
+}));
 
 export const userPositions = pgTable("user_positions", {
   id: uuid("id").primaryKey().defaultRandom(),
   network: text("network").notNull().default("devnet"),
   walletAddress: text("wallet_address").notNull(),
   marketId: text("market_id").notNull(),
-  positionId: text("position_id").unique().notNull(), // Replaced positionPda
+  positionId: text("position_id").notNull(), // Replaced positionPda
   keyBalance: bigint("key_balance", { mode: "number" }).default(0).notNull(),
   totalBoughtWei: text("total_bought_wei").default("0").notNull(),
   totalSoldWei: text("total_sold_wei").default("0").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
+}, (t) => ({
+  unqPosition: unique("user_positions_position_id_network_unique").on(t.network, t.positionId),
+}));
 
 export const tradeHistory = pgTable("trade_history", {
   id: uuid("id").primaryKey().defaultRandom(),
   network: text("network").notNull().default("devnet"),
-  txHash: text("tx_hash").unique().notNull(), // Replaced signature with txHash
+  txHash: text("tx_hash").notNull(), // Replaced signature with txHash
   marketId: text("market_id").notNull(),
   traderWallet: text("trader_wallet").notNull(),
   tradeType: text("trade_type").notNull(), // "buy" or "sell"
@@ -63,7 +69,9 @@ export const tradeHistory = pgTable("trade_history", {
   ethAmountWei: text("eth_amount_wei").notNull(), // the amount of ETH paid or received
   feeWei: text("fee_wei").notNull(),
   timestamp: timestamp("timestamp").defaultNow().notNull(),
-});
+}, (t) => ({
+  unqTx: unique("trade_history_tx_hash_network_unique").on(t.network, t.txHash),
+}));
 
 export const priceCandles = pgTable("price_candles", {
   id: uuid("id").primaryKey().defaultRandom(),

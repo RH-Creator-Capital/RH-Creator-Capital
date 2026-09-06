@@ -1,11 +1,11 @@
-import dummyUsers from "../../../../packages/db/dummy_users.json";
+import users from "../../../../packages/db/users.json";
 
 export function UserMarquee() {
   // Duplicate the array to create a seamless infinite scrolling effect
-  const marqueeUsers = [...dummyUsers, ...dummyUsers, ...dummyUsers, ...dummyUsers];
+  const marqueeUsers = [...users, ...users, ...users, ...users];
   
   // Second row uses a shifted version of the users so they don't perfectly align vertically
-  const secondRowUsers = [...dummyUsers.slice(5), ...dummyUsers.slice(0, 5)];
+  const secondRowUsers = [...users.slice(5), ...users.slice(0, 5)];
   const marqueeUsers2 = [...secondRowUsers, ...secondRowUsers, ...secondRowUsers, ...secondRowUsers];
 
   return (

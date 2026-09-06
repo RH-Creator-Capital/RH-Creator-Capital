@@ -30,6 +30,7 @@ export const TopNav = () => {
   
   const sdk = useCreatorCapital();
   const [totalKeys, setTotalKeys] = useState<number>(0);
+  const [isLoadingTotalKeys, setIsLoadingTotalKeys] = useState<boolean>(true);
 
   useEffect(() => {
     if (!publicKey || !sdk) {
@@ -45,6 +46,8 @@ export const TopNav = () => {
         }
       } catch (err) {
         console.error("Failed to fetch total keys", err);
+      } finally {
+        setIsLoadingTotalKeys(false);
       }
     };
     fetchTotalKeys();
@@ -250,9 +253,13 @@ export const TopNav = () => {
               Create Market
             </Link>
             {mounted && connected && publicKey && (
-              <div className="flex flex-col items-start ml-1">
+              <div className="flex flex-col items-start ml-1 min-w-[60px]">
                 <span className="text-[10px] font-bold text-color-muted uppercase tracking-wider">Total Keys</span>
-                <span className="text-sm font-semibold text-white bg-white/5 px-2 py-0.5 rounded border border-color-border">{totalKeys}</span>
+                {isLoadingTotalKeys ? (
+                  <div className="h-[26px] w-8 bg-white/10 rounded animate-pulse border border-color-border/50 mt-[1px]"></div>
+                ) : (
+                  <span className="text-sm font-semibold text-white bg-white/5 px-2 py-0.5 rounded border border-color-border mt-[1px]">{totalKeys}</span>
+                )}
               </div>
             )}
           </div>

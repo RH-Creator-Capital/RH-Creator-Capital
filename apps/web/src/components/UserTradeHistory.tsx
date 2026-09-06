@@ -105,9 +105,9 @@ export const UserTradeHistoryComponent = ({ address }: { address?: string }) => 
         <table className="w-full text-left text-sm min-w-[600px]">
           <thead>
             <tr className="text-color-muted border-b border-color-border">
-              <th className="pb-4 pl-4 lg:pl-8 font-medium">Type</th>
+              <th className="pb-4 font-medium pl-4 lg:pl-8">Type</th>
               <th className="pb-4 font-medium">Keys</th>
-              <th className="pb-4 font-medium">SOL</th>
+              <th className="pb-4 font-medium">ETH</th>
               <th className="pb-4 font-medium">Market</th>
               <th className="pb-4 font-medium">Time</th>
               <th className="pb-4 pr-4 lg:pr-8 font-medium">Transaction</th>
@@ -116,7 +116,7 @@ export const UserTradeHistoryComponent = ({ address }: { address?: string }) => 
           <tbody className="text-white">
           {trades.map((trade: any) => {
             const isBuy = trade.tradeType === "buy";
-            const rawAmountSol = Number(trade.wei) / 1e18;
+            const rawAmountSol = Number(trade.ethAmountWei) / 1e18;
             const amountSol = rawAmountSol < 0.0001 && rawAmountSol > 0 ? rawAmountSol.toFixed(6) : rawAmountSol.toFixed(4);
             const timeAgo = new Date(trade.timestamp).toLocaleTimeString();
             const shortMarket = `${trade.marketId.slice(0, 4)}...${trade.marketId.slice(-4)}`;

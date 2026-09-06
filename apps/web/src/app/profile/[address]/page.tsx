@@ -50,18 +50,24 @@ export default function ProfilePage({ params }: PageProps) {
   const positions = portfolioData?.portfolio || [];
   const totalFeesWei = portfolioData?.totalFeesWei ? BigInt(portfolioData.totalFeesWei) : BigInt(0);
 
+  const formatEth = (wei: bigint | number | string) => {
+    const eth = Number(wei) / 1e18;
+    if (eth === 0) return "0.0000";
+    return Math.abs(eth) < 0.0001 ? eth.toFixed(6) : eth.toFixed(4);
+  };
+
   // Calculate aggregates
   const totalValueWei = positions.reduce((acc: bigint, pos: any) => acc + BigInt(pos.currentValueWei), BigInt(0));
-  const totalValueEth = (Number(totalValueWei) / 1e18).toFixed(2);
+  const totalValueEth = formatEth(totalValueWei);
   
   const totalPnLWei = positions.reduce((acc: bigint, pos: any) => acc + BigInt(pos.pnlWei), BigInt(0));
-  const totalPnLEth = (Number(totalPnLWei) / 1e18).toFixed(2);
+  const totalPnLEth = formatEth(totalPnLWei);
   
   const totalKeys = positions.reduce((acc: number, pos: any) => acc + pos.keyBalance, 0);
 
-  const totalFeesSol = (Number(totalFeesWei) / 1e18).toFixed(2);
+  const totalFeesSol = formatEth(totalFeesWei);
   const netProfitWei = totalPnLWei + totalFeesWei;
-  const netProfitEth = (Number(netProfitWei) / 1e18).toFixed(2);
+  const netProfitEth = formatEth(netProfitWei);
 
   const getAvatarStyle = (seed: string) => {
     const styles = ["adventurer", "big-ears", "bottts", "bottts-neutral", "critters", "pixel-art", "voxel-art", "voxel-bot"];

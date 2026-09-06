@@ -48,6 +48,12 @@ export const oauthRoutes: FastifyPluginAsync = async (fastify: FastifyInstance) 
     const config = getConfig();
     const client = new TwitterApi({ clientId: config.clientId, clientSecret: config.clientSecret });
     
+    request.log.info({
+      msg: "Generating Twitter OAuth link",
+      callbackUrlUsed: config.callbackUrl,
+      clientId: config.clientId
+    });
+    
     // Generate auth URL
     const { url, codeVerifier, state } = client.generateOAuth2AuthLink(
       config.callbackUrl,

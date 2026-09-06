@@ -20,7 +20,7 @@ export const PortfolioStatsCard: React.FC<PortfolioStatsCardProps> = ({
   netProfitEth,
 }) => {
   return (
-    <div className="w-full bg-background rounded-xl p-6 border border-color-border shadow-lg text-left hover:border-color-buy/50 transition-colors group">
+    <div className="w-full bg-background rounded-xl p-6 border border-color-border shadow-lg text-left hover:border-white/50 transition-colors group">
       <h2 className="text-base font-bold text-white mb-4">Portfolio Stats</h2>
       <div className="flex flex-col gap-4 text-sm">
         <div className="flex justify-between border-b border-color-border/50 pb-3">

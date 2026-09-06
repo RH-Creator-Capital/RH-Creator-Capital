@@ -15,13 +15,13 @@ export const MarketsCreatedList: React.FC<MarketsCreatedListProps> = ({ markets 
       </div>
       
       {markets.length === 0 ? (
-        <div className="bg-background border border-color-border rounded-xl p-6 text-center shadow-lg hover:border-color-buy/50 transition-colors group text-sm">
+        <div className="bg-background border border-color-border rounded-xl p-6 text-center shadow-lg hover:border-white/50 transition-colors group text-sm">
           <p className="text-color-muted">No markets launched.</p>
         </div>
       ) : (
         <div className="flex flex-col gap-4">
           {markets.map((market: any) => (
-            <div key={market.marketId} className="bg-background border border-color-border rounded-xl p-4 shadow-lg hover:border-color-buy/50 transition-colors group">
+            <div key={market.marketId} className="bg-background border border-color-border rounded-xl p-4 shadow-lg hover:border-white/50 transition-colors group">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-3 min-w-0">
                   <div className="w-10 h-10 rounded-full bg-[#161A22] border border-color-border overflow-hidden shrink-0">
@@ -51,7 +51,7 @@ export const MarketsCreatedList: React.FC<MarketsCreatedListProps> = ({ markets 
               
               <Link 
                 href={`/creator/${market.marketId}`}
-                className="block w-full text-center bg-white/5 hover:bg-color-buy border border-color-border hover:border-color-buy text-white hover:text-black text-xs font-semibold py-1.5 rounded-lg transition-all"
+                className="block w-full text-center bg-white/5 hover:bg-white border border-color-border hover:border-white text-white hover:text-black text-xs font-semibold py-1.5 rounded-lg transition-all"
               >
                 View Market
               </Link>

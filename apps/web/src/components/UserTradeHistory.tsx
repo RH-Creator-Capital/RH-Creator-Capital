@@ -85,7 +85,7 @@ export const UserTradeHistoryComponent = ({ address }: { address?: string }) => 
 
   if (error) {
     return (
-      <section className="bg-background border border-color-border p-6 rounded-xl shadow-lg hover:border-color-buy/50 transition-colors group">
+      <section className="bg-background border border-color-border p-6 rounded-xl shadow-lg hover:border-white/50 transition-colors group">
         <div className="text-center py-12 text-color-sell">Error loading trade history</div>
       </section>
     );

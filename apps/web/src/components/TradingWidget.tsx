@@ -225,7 +225,7 @@ export const TradingWidget: FC<{ marketId: string, twitterHandle?: string }> = (
 
   return (
     <>
-      <div className="bg-background rounded-xl p-6 border border-color-border shadow-lg relative hover:border-color-buy/50 transition-colors group">
+      <div className="bg-background rounded-xl p-6 border border-color-border shadow-lg relative hover:border-white/50 transition-colors group">
         {/* Toggle Buttons */}
         <div className="flex gap-1.5 mb-5 bg-[#07090c] p-1.5 rounded-lg border border-color-border">
           <button
@@ -283,7 +283,7 @@ export const TradingWidget: FC<{ marketId: string, twitterHandle?: string }> = (
               <button
                 key={val}
                 onClick={() => setAmount(val.toString())}
-                className="flex-1 py-1 text-xs font-semibold rounded bg-[#07090c] border border-color-border text-color-muted hover:text-white hover:border-color-buy/50 transition-colors"
+                className="flex-1 py-1 text-xs font-semibold rounded bg-[#07090c] border border-color-border text-color-muted hover:text-white hover:border-white/50 transition-colors"
               >
                 {val} {val === 1 ? 'KEY' : 'KEYS'}
               </button>

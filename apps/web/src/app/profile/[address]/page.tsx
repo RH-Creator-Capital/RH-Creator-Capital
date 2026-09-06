@@ -141,7 +141,7 @@ export default function ProfilePage({ params }: PageProps) {
 
   if (!isLoading && !userProfile && markets.length === 0 && positions.length === 0 && !isOwner) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[50vh] text-center p-8 bg-background rounded-xl border border-color-border shadow-lg hover:border-color-buy/50 transition-colors">
+      <div className="flex flex-col items-center justify-center min-h-[50vh] text-center p-8 bg-background rounded-xl border border-color-border shadow-lg hover:border-white/50 transition-colors">
         <svg className="w-16 h-16 text-color-muted mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
         <h1 className="text-2xl font-bold text-white mb-2">User Not Found</h1>
         <p className="text-color-muted max-w-md">This wallet has not registered a profile and has no market activity.</p>
@@ -222,7 +222,7 @@ export default function ProfilePage({ params }: PageProps) {
                 const title = market?.twitterHandle ? `@${market.twitterHandle}` : "Fee Claim";
                 
                 return (
-                  <div key={w.id} className="bg-background border border-color-border/50 rounded-xl p-3 shadow-lg hover:border-color-buy/50 transition-colors group flex items-center justify-between">
+                  <div key={w.id} className="bg-background border border-color-border/50 rounded-xl p-3 shadow-lg hover:border-white/50 transition-colors group flex items-center justify-between">
                     <div className="flex items-center gap-3 min-w-0">
                       <div className="w-10 h-10 rounded-full overflow-hidden shrink-0 border border-color-border bg-[#161A22]">
                         <img src={avatar} alt="Avatar" className="w-full h-full object-cover" />

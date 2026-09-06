@@ -266,7 +266,7 @@ export default function CreatorPage({ params }: PageProps) {
   return (
     <div className="flex flex-col gap-6 pb-12">
       {/* Header Profile */}
-      <div className="bg-background p-6 rounded-xl border border-color-border shadow-lg flex flex-col gap-6 relative overflow-hidden group hover:border-color-buy/50 transition-colors">
+      <div className="bg-background p-6 rounded-xl border border-color-border shadow-lg flex flex-col gap-6 relative overflow-hidden group hover:border-white/50 transition-colors">
         {finalMarket.bannerUrl && (
           <>
             <div 
@@ -401,7 +401,7 @@ export default function CreatorPage({ params }: PageProps) {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 flex flex-col gap-6">
           {/* Main Chart */}
-          <section className="bg-background border border-color-border pt-5 rounded-xl shadow-lg hover:border-color-buy/50 transition-colors group overflow-hidden flex flex-col">
+          <section className="bg-background border border-color-border pt-5 rounded-xl shadow-lg hover:border-white/50 transition-colors group overflow-hidden flex flex-col">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-5 px-5">
               <div className="flex items-center gap-3">
                 <h2 className="text-[11px] font-bold text-color-muted uppercase tracking-[0.15em]">PRICE HISTORY</h2>
@@ -440,7 +440,7 @@ export default function CreatorPage({ params }: PageProps) {
           </section>
 
           {/* Trade History */}
-          <section className="bg-background border border-color-border p-5 rounded-xl shadow-lg hover:border-color-buy/50 transition-colors group">
+          <section className="bg-background border border-color-border p-5 rounded-xl shadow-lg hover:border-white/50 transition-colors group">
             <h2 className="text-[11px] font-bold text-color-muted uppercase tracking-[0.15em] mb-5">RECENT TRADES</h2>
             <TradeHistoryComponent marketId={id} />
           </section>
@@ -451,7 +451,7 @@ export default function CreatorPage({ params }: PageProps) {
           <TradingWidget marketId={id} twitterHandle={finalMarket.twitterHandle} />
 
           {/* Market Stats */}
-          <div className="bg-background rounded-xl p-5 border border-color-border shadow-lg hover:border-color-buy/50 transition-colors group">
+          <div className="bg-background rounded-xl p-5 border border-color-border shadow-lg hover:border-white/50 transition-colors group">
             <h2 className="text-[11px] font-bold text-color-muted uppercase tracking-[0.15em] mb-5">
               MARKET STATS
             </h2>
@@ -477,7 +477,7 @@ export default function CreatorPage({ params }: PageProps) {
 
           {/* Creator Profile Card (Identity on Robinhood Chain) */}
           {onChainMarket?.creatorWallet && (
-            <div className="bg-background border border-color-border p-5 rounded-xl shadow-lg hover:border-color-buy/50 transition-colors group">
+            <div className="bg-background border border-color-border p-5 rounded-xl shadow-lg hover:border-white/50 transition-colors group">
               <h2 className="text-[11px] font-bold text-color-muted uppercase tracking-[0.15em] mb-5">
                 IDENTITY ON ETHANA
               </h2>

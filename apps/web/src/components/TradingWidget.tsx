@@ -135,6 +135,11 @@ export const TradingWidget: FC<{ marketId: string, twitterHandle?: string }> = (
       return;
     }
     
+    if (supply === 0 && tradeType === "buy" && parsedAmount !== 1) {
+      toast.error("For a new market, the first purchase must be exactly 1 KEY.");
+      return;
+    }
+    
     if (tradeType === "sell" && parsedAmount > keyBalance) {
       toast.error("Insufficient key balance.");
       return;
@@ -250,6 +255,19 @@ export const TradingWidget: FC<{ marketId: string, twitterHandle?: string }> = (
           </button>
         </div>
 
+        {/* New Market Alert */}
+        {supply === 0 && tradeType === "buy" && !loadingMarket && (
+          <div className="mb-4 text-xs px-4 py-3 rounded-lg border bg-white/5 border-white/10 text-white/90 flex flex-col items-center justify-center gap-2 text-center animate-in fade-in">
+            <div className="flex items-center gap-1.5">
+              <svg className="w-4 h-4 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              <span className="font-semibold">New Market Initialization</span>
+            </div>
+            <span className="text-white/70">
+              The first purchase must be exactly <strong>1 KEY</strong>. After this, you can buy any amount.
+            </span>
+          </div>
+        )}
+
         {/* Input Section */}
         <div className="mb-5">
           <div className="flex justify-between items-center mb-2">
@@ -271,10 +289,11 @@ export const TradingWidget: FC<{ marketId: string, twitterHandle?: string }> = (
               type="number"
               min="1"
               step="1"
-              value={amount}
+              value={supply === 0 && tradeType === "buy" ? "1" : amount}
               onChange={(e) => setAmount(e.target.value)}
+              disabled={supply === 0 && tradeType === "buy"}
               placeholder="0"
-              className="w-full bg-[#07090c] border border-color-border rounded-lg p-3 text-2xl font-bold text-white focus:outline-none focus:border-color-buy focus:ring-1 focus:ring-color-buy transition-all"
+              className="w-full bg-[#07090c] border border-color-border rounded-lg p-3 text-2xl font-bold text-white focus:outline-none focus:border-color-buy focus:ring-1 focus:ring-color-buy transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             />
             <span className="absolute right-4 top-1/2 -translate-y-1/2 text-color-muted font-bold text-xs">KEYS</span>
           </div>
@@ -283,7 +302,8 @@ export const TradingWidget: FC<{ marketId: string, twitterHandle?: string }> = (
               <button
                 key={val}
                 onClick={() => setAmount(val.toString())}
-                className="flex-1 py-1 text-xs font-semibold rounded bg-[#07090c] border border-color-border text-color-muted hover:text-white hover:border-white/50 transition-colors"
+                disabled={supply === 0 && tradeType === "buy" && val !== 1}
+                className="flex-1 py-1 text-xs font-semibold rounded bg-[#07090c] border border-color-border text-color-muted hover:text-white hover:border-white/50 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
               >
                 {val} {val === 1 ? 'KEY' : 'KEYS'}
               </button>

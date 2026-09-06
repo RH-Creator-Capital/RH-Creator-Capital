@@ -13,6 +13,7 @@ import { portfolioRoutes } from "./routes/portfolio";
 import { protocolRoutes } from "./routes/protocol";
 import { websocketRoutes } from "./routes/websocket";
 import { usersRoutes } from "./routes/users";
+import { webhookRoutes } from "./routes/webhook";
 import { startIndexer } from "./indexer";
 import { startTradingBot } from "./services/bot";
 
@@ -40,6 +41,7 @@ fastify.register(portfolioRoutes, { prefix: "/api/portfolio" });
 fastify.register(protocolRoutes, { prefix: "/api/protocol" });
 fastify.register(usersRoutes, { prefix: "/api/users" });
 fastify.register(websocketRoutes, { prefix: "/ws" });
+fastify.register(webhookRoutes, { prefix: "/webhook" });
 
 // Webhooks for EVM (if any) can be added here, but Ponder handles most indexing directly to DB.
 

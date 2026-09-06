@@ -2,11 +2,14 @@ import { createConfig } from "@ponder/core";
 import { http } from "viem";
 import { rhCreatorCapitalAbi } from "./abis/rhCreatorCapital";
 
+const chainId = Number(process.env.PONDER_CHAIN_ID) || 46630;
+const rpcUrl = process.env.PONDER_RPC_URL || process.env.PONDER_RPC_URL_46630;
+
 export default createConfig({
   networks: {
     robinhood: {
-      chainId: 46630,
-      transport: http(process.env.PONDER_RPC_URL_46630),
+      chainId: chainId,
+      transport: http(rpcUrl),
     },
   },
   contracts: {

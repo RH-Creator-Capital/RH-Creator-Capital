@@ -12,7 +12,7 @@ export default function ProtocolDashboard() {
 
   const stats = statsData?.stats || {
     totalProtocolFeesWei: 0,
-    totalBuybackSolSpentWei: 0,
+    totalBuybackEthSpentWei: 0,
     totalPscBought: 0,
     totalPscBurned: 0,
   };
@@ -24,7 +24,7 @@ export default function ProtocolDashboard() {
   };
 
   const feesSol = formatEth(stats.totalProtocolFeesWei);
-  const buybackEth = formatEth(stats.totalBuybackSolSpentWei);
+  const buybackEth = formatEth(stats.totalBuybackEthSpentWei);
   const pscBought = (Number(stats.totalPscBought) / 1e6).toFixed(2);
   const pscBurned = (Number(stats.totalPscBurned) / 1e6).toFixed(2);
 
@@ -66,7 +66,7 @@ export default function ProtocolDashboard() {
         </div>
 
         {/* KPI Cards — same style as PortfolioStatsCard */}
-        <div className="w-full bg-background rounded-xl p-6 border border-color-border shadow-lg text-left hover:border-color-buy/50 transition-colors group">
+        <div className="w-full bg-background rounded-xl p-6 border border-color-border shadow-lg text-left hover:border-white/50 transition-colors group">
           <h2 className="text-base font-bold text-white mb-4">Protocol Stats</h2>
           <div className="flex flex-col gap-4 text-sm">
             <div className="flex justify-between border-b border-color-border/50 pb-3">
@@ -117,17 +117,17 @@ export default function ProtocolDashboard() {
                 >
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full overflow-hidden border border-color-border/50 bg-[#161A22] shrink-0">
-                      <img src={`https://api.dicebear.com/10.x/critters/svg?seed=${fee.signature}`} alt="" className="w-full h-full object-cover" />
+                      <img src={`https://api.dicebear.com/10.x/critters/svg?seed=${fee.txHash}`} alt="" className="w-full h-full object-cover" />
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-white font-mono text-sm font-semibold">+{formatEth(fee.amount)} ETH</span>
+                      <span className="text-white font-mono text-sm font-semibold">+{formatEth(fee.amountWei)} ETH</span>
                       <a 
-                        href={`${process.env.NEXT_PUBLIC_EXPLORER_URL}/tx/${fee.signature}`} 
-                        target="_blank" 
+                        href={fee.txHash ? `${process.env.NEXT_PUBLIC_EXPLORER_URL}/tx/${fee.txHash}` : '#'} 
+                        target={fee.txHash ? "_blank" : "_self"} 
                         rel="noreferrer" 
-                        className="text-color-buy hover:underline text-xs flex items-center gap-1 transition-colors mt-0.5"
+                        className="text-white hover:underline text-xs flex items-center gap-1 transition-colors mt-0.5"
                       >
-                        {fee.signature.substring(0, 6)}...{fee.signature.substring(fee.signature.length - 4)}
+                        {fee.txHash ? `${fee.txHash.substring(0, 6)}...${fee.txHash.substring(fee.txHash.length - 4)}` : 'Processing...'}
                         <svg className="w-2.5 h-2.5 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                       </a>
                     </div>
@@ -150,7 +150,7 @@ export default function ProtocolDashboard() {
         </div>
 
         {keeperLogs.length === 0 ? (
-          <div className="bg-background border border-color-border rounded-xl p-6 text-center shadow-lg hover:border-color-buy/50 transition-colors group">
+          <div className="bg-background border border-color-border rounded-xl p-6 text-center shadow-lg hover:border-white/50 transition-colors group">
             <p className="text-color-muted text-sm">No keeper executions yet.</p>
           </div>
         ) : (
@@ -161,9 +161,9 @@ export default function ProtocolDashboard() {
               const isSkipped = log.status === "SKIPPED";
 
               return (
-                <div key={log.id} className="bg-background border border-color-border/50 rounded-xl p-3 shadow-lg hover:border-color-buy/50 transition-colors group flex flex-col gap-2">
+                <div key={log.id} className="bg-background border border-color-border/50 rounded-xl p-3 shadow-lg hover:border-white/50 transition-colors group flex flex-col gap-2">
                   <div className="flex items-center justify-between">
-                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${isSuccess ? 'bg-color-buy/15 text-color-buy' : isSkipped ? 'bg-white/5 text-color-muted' : 'bg-color-sell/15 text-color-sell'}`}>
+                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${isSuccess ? 'bg-white/15 text-white' : isSkipped ? 'bg-white/5 text-color-muted' : 'bg-color-sell/15 text-color-sell'}`}>
                       {log.status}
                     </span>
                     <span className="text-[10px] text-color-muted">

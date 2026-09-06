@@ -245,7 +245,7 @@ export const TopNav = () => {
           <div className="hidden sm:flex items-center gap-3">
             <Link 
               href="/claim" 
-              className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg border border-color-buy text-color-buy hover:bg-color-buy/10 transition-colors text-sm font-semibold"
+              className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg border border-white text-white hover:bg-white/10 transition-colors text-sm font-semibold"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4"></path>
@@ -265,7 +265,7 @@ export const TopNav = () => {
           </div>
           {mounted && connected && publicKey ? (
             <div className="flex items-center gap-3">
-              <Link href={`/profile/${publicKey}`} className="relative group flex items-center gap-2 bg-transparent pr-4 pl-1 py-1 rounded-full border border-color-border hover:border-color-buy hover:bg-white/[0.03] transition-all cursor-pointer" title="Go to Profile">
+              <Link href={`/profile/${publicKey}`} className="relative group flex items-center gap-2 bg-transparent pr-4 pl-1 py-1 rounded-full border border-color-border hover:border-white hover:bg-white/[0.03] transition-all cursor-pointer" title="Go to Profile">
                 <div className="relative">
                   <div className="w-10 h-10 rounded-full bg-[#161A22] border border-color-border overflow-hidden group-hover:border-indigo-500 transition-colors">
                     <img 
@@ -306,7 +306,7 @@ export const TopNav = () => {
           ) : (
             <button 
               onClick={() => openAppKit()}
-              className="!bg-color-buy !text-[#07090c] !font-sans !font-semibold !text-sm !h-9 !px-5 !rounded-full hover:!opacity-90 transition-opacity"
+              className="!bg-white !text-[#07090c] !font-sans !font-semibold !text-sm !h-9 !px-5 !rounded-full hover:!opacity-90 transition-opacity"
             >
               Connect Wallet
             </button>

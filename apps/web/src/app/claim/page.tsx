@@ -597,11 +597,11 @@ export default function ClaimPage() {
         <div className="flex flex-col gap-8 bg-background/30 backdrop-blur-sm p-5 sm:p-8 md:p-10 rounded-2xl relative lg:sticky lg:top-24 h-fit z-0">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-color-muted mb-6">
-              <span className="w-2 h-2 rounded-full bg-color-buy animate-pulse" />
+              <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
               Creator Portal
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight tracking-tight">
-              Launch Your <span className="text-color-buy">Social Market.</span>
+              Launch Your <span className="text-white">Social Market.</span>
             </h1>
             <p className="text-color-muted text-lg leading-relaxed">
               Tokenize your social influence. Build a community-driven economy where your most loyal supporters become stakeholders in your success.
@@ -618,7 +618,7 @@ export default function ClaimPage() {
             ].map(feature => (
               <div key={feature.title} className="flex gap-4">
                 <div className="w-12 h-12 rounded-2xl bg-white/[0.02] border border-white/[0.05] flex items-center justify-center shrink-0">
-                  <svg className="w-5 h-5 text-color-buy" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
@@ -634,7 +634,7 @@ export default function ClaimPage() {
         {/* Right Side: Action Card */}
         <div className="bg-background border border-color-border/50 p-5 sm:p-8 md:p-10 rounded-2xl w-full shadow-lg relative overflow-hidden">
           {/* Subtle glow effect */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-1 bg-gradient-to-r from-transparent via-color-buy to-transparent opacity-50" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-1 bg-gradient-to-r from-transparent via-white to-transparent opacity-50" />
 
         {!publicKey ? (
           <div className="flex flex-col items-center gap-6 w-full">
@@ -642,11 +642,11 @@ export default function ClaimPage() {
               <h2 className="text-2xl font-bold text-white mb-2">Connect Wallet</h2>
               <p className="text-color-muted text-sm">Connect your Robinhood Chain wallet to begin.</p>
             </div>
-            <WalletMultiButton className="!bg-[#161A22] !border !border-color-border hover:!border-color-buy !transition-all !text-white !h-14 !px-8 !rounded-xl !font-sans !font-semibold w-full flex justify-center shadow-lg" />
+            <WalletMultiButton className="!bg-[#161A22] !border !border-color-border hover:!border-white !transition-all !text-white !h-14 !px-8 !rounded-xl !font-sans !font-semibold w-full flex justify-center shadow-lg" />
           </div>
         ) : status === "SUCCESS" ? (
           <div className="flex flex-col items-center gap-4 w-full">
-            <div className="w-16 h-16 bg-color-buy/20 rounded-full flex items-center justify-center text-color-buy mb-2">
+            <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center text-white mb-2">
               <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
             </div>
             <div className="text-center">
@@ -666,7 +666,7 @@ export default function ClaimPage() {
               {createdTxSig && (
                 <div className="flex justify-between items-center text-sm border-b border-color-border/30 pb-2">
                   <span className="text-color-muted">Transaction</span>
-                  <a href={`${process.env.NEXT_PUBLIC_EXPLORER_URL}/tx/${createdTxSig}`} target="_blank" rel="noopener noreferrer" className="text-color-buy hover:underline font-mono">
+                  <a href={`${process.env.NEXT_PUBLIC_EXPLORER_URL}/tx/${createdTxSig}`} target="_blank" rel="noopener noreferrer" className="text-white hover:underline font-mono">
                     {createdTxSig.slice(0,6)}...{createdTxSig.slice(-6)}
                   </a>
                 </div>
@@ -677,7 +677,7 @@ export default function ClaimPage() {
               </div>
               <div className="flex justify-between items-center text-sm border-b border-color-border/30 pb-2">
                 <span className="text-color-muted">Ticker</span>
-                <span className="text-color-buy font-bold">{ticker}</span>
+                <span className="text-white font-bold">{ticker}</span>
               </div>
               <div className="flex justify-between items-center text-sm">
                 <span className="text-color-muted">Category</span>
@@ -688,13 +688,13 @@ export default function ClaimPage() {
             <div className="flex flex-col sm:flex-row gap-3 w-full">
               <button 
                 onClick={() => router.push(`/creator/${createdMarketPda}`)}
-                className="flex-1 bg-color-buy text-[#07090c] font-bold py-3 px-4 rounded-xl hover:bg-opacity-90 transition-colors"
+                className="flex-1 bg-white text-[#07090c] font-bold py-3 px-4 rounded-xl hover:bg-opacity-90 transition-colors"
               >
                 Go to Market
               </button>
               <button 
                 onClick={() => router.push(`/profile/${publicKey}`)}
-                className="flex-1 bg-white/5 border border-color-border/50 text-white font-bold py-3 px-4 rounded-xl hover:border-color-buy transition-colors"
+                className="flex-1 bg-white/5 border border-color-border/50 text-white font-bold py-3 px-4 rounded-xl hover:border-white transition-colors"
               >
                 View Profile
               </button>
@@ -724,7 +724,7 @@ export default function ClaimPage() {
               </div>
 
               {isXLinked ? (
-                <div className="w-full bg-background border border-color-buy/30 rounded-xl p-4 flex items-center justify-between">
+                <div className="w-full bg-background border border-white/30 rounded-xl p-4 flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     {twitterAvatar ? (
                       <img src={twitterAvatar} alt={twitterName} className="w-10 h-10 rounded-full bg-white/5" />
@@ -736,7 +736,7 @@ export default function ClaimPage() {
                     <div>
                       <div className="font-bold text-white flex items-center gap-2">
                         {twitterName}
-                        <span className="bg-color-buy text-[#07090c] text-[9px] font-bold px-1.5 py-0.5 rounded-sm">VERIFIED</span>
+                        <span className="bg-white text-[#07090c] text-[9px] font-bold px-1.5 py-0.5 rounded-sm">VERIFIED</span>
                       </div>
                       <div className="text-color-muted text-sm">@{twitterHandle}</div>
                     </div>
@@ -779,7 +779,7 @@ export default function ClaimPage() {
                         } catch (e) {}
                       }} 
                       placeholder="https://x.com/username" 
-                      className={`w-full bg-white/5 border ${!isValidUrl(xProfileUrl) && xProfileUrl.trim().length > 0 ? 'border-red-500 focus:border-red-400' : 'border-color-border/50 focus:border-color-buy'} rounded-xl p-3 text-white outline-none transition-colors`} 
+                      className={`w-full bg-white/5 border ${!isValidUrl(xProfileUrl) && xProfileUrl.trim().length > 0 ? 'border-red-500 focus:border-red-400' : 'border-color-border/50 focus:border-white'} rounded-xl p-3 text-white outline-none transition-colors`} 
                     />
                     {!isValidUrl(xProfileUrl) && xProfileUrl.trim().length > 0 && (
                       <p className="text-red-500 text-xs mt-1">Please enter a valid URL (e.g. https://...)</p>
@@ -797,7 +797,7 @@ export default function ClaimPage() {
                         onChange={e => setTwitterHandle(e.target.value)} 
                         placeholder="e.g. username" 
                         disabled={!!xProfileUrl.trim()}
-                        className={`w-full bg-white/5 border border-color-border/50 rounded-xl p-3 text-white outline-none transition-colors ${xProfileUrl.trim() ? 'opacity-50 cursor-not-allowed' : 'focus:border-color-buy'}`} 
+                        className={`w-full bg-white/5 border border-color-border/50 rounded-xl p-3 text-white outline-none transition-colors ${xProfileUrl.trim() ? 'opacity-50 cursor-not-allowed' : 'focus:border-white'}`} 
                       />
                     </div>
                     <div>
@@ -805,7 +805,7 @@ export default function ClaimPage() {
                         Display Name <span className="text-red-500">*</span>
                         <InfoTooltip text="Your full name or community name." />
                       </label>
-                      <input type="text" value={twitterName} onChange={e => setTwitterName(e.target.value)} placeholder="e.g. John Doe" className="w-full bg-white/5 border border-color-border/50 rounded-xl p-3 text-white focus:border-color-buy outline-none transition-colors" />
+                      <input type="text" value={twitterName} onChange={e => setTwitterName(e.target.value)} placeholder="e.g. John Doe" className="w-full bg-white/5 border border-color-border/50 rounded-xl p-3 text-white focus:border-white outline-none transition-colors" />
                     </div>
                   </div>
                   <div>
@@ -843,12 +843,12 @@ export default function ClaimPage() {
                         />
                         <label 
                           htmlFor="avatar-upload" 
-                          className={`cursor-pointer bg-white/5 border ${avatarUploadError ? 'border-red-500 text-red-400' : 'border-color-border/50 text-white hover:border-color-buy'} rounded-xl px-4 py-3 flex flex-col items-center justify-center transition-colors text-sm font-semibold border-dashed w-full ${isAvatarUploading ? 'opacity-50 pointer-events-none' : ''}`}
+                          className={`cursor-pointer bg-white/5 border ${avatarUploadError ? 'border-red-500 text-red-400' : 'border-color-border/50 text-white hover:border-white'} rounded-xl px-4 py-3 flex flex-col items-center justify-center transition-colors text-sm font-semibold border-dashed w-full ${isAvatarUploading ? 'opacity-50 pointer-events-none' : ''}`}
                         >
                           {isAvatarUploading ? (
                             <span>Uploading...</span>
                           ) : twitterAvatar && twitterAvatar.includes('supabase.co') ? (
-                            <div className="flex flex-col items-center gap-1 text-color-buy">
+                            <div className="flex flex-col items-center gap-1 text-white">
                               <div className="flex items-center gap-2">
                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
                                 <span>Image uploaded successfully!</span>
@@ -877,7 +877,7 @@ export default function ClaimPage() {
                             if (avatarUploadError) setAvatarUploadError(null);
                           }} 
                           placeholder="https://..." 
-                          className={`w-full bg-white/5 border ${avatarUploadError || (!isValidUrl(twitterAvatar) && twitterAvatar.trim().length > 0) ? 'border-red-500 focus:border-red-400' : 'border-color-border/50 focus:border-color-buy'} rounded-xl p-3 text-white outline-none transition-colors text-sm`}
+                          className={`w-full bg-white/5 border ${avatarUploadError || (!isValidUrl(twitterAvatar) && twitterAvatar.trim().length > 0) ? 'border-red-500 focus:border-red-400' : 'border-color-border/50 focus:border-white'} rounded-xl p-3 text-white outline-none transition-colors text-sm`}
                         />
                         {!isValidUrl(twitterAvatar) && twitterAvatar.trim().length > 0 && !avatarUploadError && (
                           <p className="text-red-500 text-xs mt-1">Please enter a valid URL (e.g. https://...)</p>
@@ -899,7 +899,7 @@ export default function ClaimPage() {
                 <select 
                   value={category} 
                   onChange={e => setCategory(e.target.value)}
-                  className="w-full bg-white/5 border border-color-border/50 rounded-xl p-3 text-white focus:border-color-buy outline-none transition-colors appearance-none"
+                  className="w-full bg-white/5 border border-color-border/50 rounded-xl p-3 text-white focus:border-white outline-none transition-colors appearance-none"
                 >
                   {CATEGORIES.map(c => <option key={c} value={c} className="bg-background">{c}</option>)}
                 </select>
@@ -915,7 +915,7 @@ export default function ClaimPage() {
                     value={ticker} 
                     onChange={e => setTicker(e.target.value)} 
                     placeholder={`e.g. $${twitterHandle?.toUpperCase() || 'TICKER'}`} 
-                    className="w-full bg-white/5 border border-color-border/50 rounded-xl p-3 pr-24 text-white focus:border-color-buy outline-none transition-colors" 
+                    className="w-full bg-white/5 border border-color-border/50 rounded-xl p-3 pr-24 text-white focus:border-white outline-none transition-colors" 
                   />
                   {twitterHandle && !ticker && (
                     <button 
@@ -933,7 +933,7 @@ export default function ClaimPage() {
                 Description <span className="text-red-500">*</span>
                 <InfoTooltip text="Tell people about your market, roadmap, and what holders get." />
               </label>
-              <textarea value={description} onChange={e => setDescription(e.target.value)} placeholder="About your community..." className="w-full bg-white/5 border border-color-border/50 rounded-xl p-3 text-white focus:border-color-buy outline-none transition-colors resize-none h-20" />
+              <textarea value={description} onChange={e => setDescription(e.target.value)} placeholder="About your community..." className="w-full bg-white/5 border border-color-border/50 rounded-xl p-3 text-white focus:border-white outline-none transition-colors resize-none h-20" />
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
@@ -941,7 +941,7 @@ export default function ClaimPage() {
                   Link
                   <InfoTooltip text="Link to your website or primary social profile." />
                 </label>
-                <input type="text" value={websiteUrl} onChange={e => setWebsiteUrl(e.target.value)} placeholder="https://..." className={`w-full bg-white/5 border ${!isValidUrl(websiteUrl) && websiteUrl.trim().length > 0 ? 'border-red-500 focus:border-red-400' : 'border-color-border/50 focus:border-color-buy'} rounded-xl p-3 text-white outline-none transition-colors text-sm`} />
+                <input type="text" value={websiteUrl} onChange={e => setWebsiteUrl(e.target.value)} placeholder="https://..." className={`w-full bg-white/5 border ${!isValidUrl(websiteUrl) && websiteUrl.trim().length > 0 ? 'border-red-500 focus:border-red-400' : 'border-color-border/50 focus:border-white'} rounded-xl p-3 text-white outline-none transition-colors text-sm`} />
                 {!isValidUrl(websiteUrl) && websiteUrl.trim().length > 0 && (
                   <p className="text-red-500 text-xs mt-1">Please enter a valid URL (e.g. https://...)</p>
                 )}
@@ -951,7 +951,7 @@ export default function ClaimPage() {
                   Telegram
                   <InfoTooltip text="Link to your community Telegram group." />
                 </label>
-                <input type="text" value={telegramUrl} onChange={e => setTelegramUrl(e.target.value)} placeholder="https://t.me/..." className={`w-full bg-white/5 border ${!isValidUrl(telegramUrl) && telegramUrl.trim().length > 0 ? 'border-red-500 focus:border-red-400' : 'border-color-border/50 focus:border-color-buy'} rounded-xl p-3 text-white outline-none transition-colors text-sm`} />
+                <input type="text" value={telegramUrl} onChange={e => setTelegramUrl(e.target.value)} placeholder="https://t.me/..." className={`w-full bg-white/5 border ${!isValidUrl(telegramUrl) && telegramUrl.trim().length > 0 ? 'border-red-500 focus:border-red-400' : 'border-color-border/50 focus:border-white'} rounded-xl p-3 text-white outline-none transition-colors text-sm`} />
                 {!isValidUrl(telegramUrl) && telegramUrl.trim().length > 0 && (
                   <p className="text-red-500 text-xs mt-1">Please enter a valid URL (e.g. https://...)</p>
                 )}
@@ -993,12 +993,12 @@ export default function ClaimPage() {
                   />
                   <label 
                     htmlFor="banner-upload" 
-                    className={`cursor-pointer bg-white/5 border ${uploadError ? 'border-red-500 text-red-400' : 'border-color-border/50 text-white hover:border-color-buy'} rounded-xl px-4 py-3 flex flex-col items-center justify-center transition-colors text-sm font-semibold border-dashed w-full ${isUploading ? 'opacity-50 pointer-events-none' : ''}`}
+                    className={`cursor-pointer bg-white/5 border ${uploadError ? 'border-red-500 text-red-400' : 'border-color-border/50 text-white hover:border-white'} rounded-xl px-4 py-3 flex flex-col items-center justify-center transition-colors text-sm font-semibold border-dashed w-full ${isUploading ? 'opacity-50 pointer-events-none' : ''}`}
                   >
                     {isUploading ? (
                       <span>Uploading...</span>
                     ) : bannerUrl && bannerUrl.includes('supabase.co') ? (
-                      <div className="flex flex-col items-center gap-1 text-color-buy">
+                      <div className="flex flex-col items-center gap-1 text-white">
                         <div className="flex items-center gap-2">
                           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
                           <span>Image uploaded successfully!</span>
@@ -1023,7 +1023,7 @@ export default function ClaimPage() {
                     if (uploadError) setUploadError(null);
                   }} 
                   placeholder="https://..." 
-                  className={`w-full bg-white/5 border ${uploadError || (!isValidUrl(bannerUrl) && bannerUrl.trim().length > 0) ? 'border-red-500 focus:border-red-400' : 'border-color-border/50 focus:border-color-buy'} rounded-xl p-3 text-white outline-none transition-colors text-sm`}
+                  className={`w-full bg-white/5 border ${uploadError || (!isValidUrl(bannerUrl) && bannerUrl.trim().length > 0) ? 'border-red-500 focus:border-red-400' : 'border-color-border/50 focus:border-white'} rounded-xl p-3 text-white outline-none transition-colors text-sm`}
                 />
               )}
               
@@ -1051,7 +1051,7 @@ export default function ClaimPage() {
                 Initial Buy (Keys)
                 <InfoTooltip text="Buy tokens in the same transaction as creation to secure a position before bots can." />
               </label>
-              <input type="number" min="0" value={initialBuyAmount} onChange={e => setInitialBuyAmount(e.target.value)} placeholder="0" className="w-full bg-white/5 border border-color-border/50 rounded-xl p-3 text-white focus:border-color-buy outline-none transition-colors" />
+              <input type="number" min="0" value={initialBuyAmount} onChange={e => setInitialBuyAmount(e.target.value)} placeholder="0" className="w-full bg-white/5 border border-color-border/50 rounded-xl p-3 text-white focus:border-white outline-none transition-colors" />
               <p className="text-color-muted text-xs mt-1">Optional. Buy keys in the same transaction to prevent snipers.</p>
             </div>
             */}
@@ -1059,7 +1059,7 @@ export default function ClaimPage() {
             <button
               onClick={handleCreateMarket}
               disabled={status === "LOADING" || !ticker.trim() || !description.trim() || !bannerUrl.trim()}
-              className="w-full bg-color-buy text-[#07090c] font-bold py-3.5 px-4 rounded-xl hover:bg-opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-color-buy/20 mt-2"
+              className="w-full bg-white text-[#07090c] font-bold py-3.5 px-4 rounded-xl hover:bg-opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-white/20 mt-2"
             >
               {status === "LOADING" ? "Creating Market..." : status !== "AUTHENTICATED" ? "Sign & Launch Market" : "Launch Market"}
             </button>

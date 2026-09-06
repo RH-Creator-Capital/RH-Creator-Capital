@@ -6,7 +6,7 @@ export const Footer = () => {
       <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
         <div className="flex flex-col items-center md:items-start gap-2">
           <Link href="/" className="text-xl font-bold tracking-widest text-white uppercase flex items-center gap-2">
-            <span className="text-color-buy">/</span>RH Creator Capital
+            <span className="text-white">/</span>RH Creator Capital
           </Link>
           <span className="text-white/40 text-xs uppercase tracking-widest">
             Monetize your social graph on Robinhood Chain

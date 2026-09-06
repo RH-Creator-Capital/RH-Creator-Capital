@@ -86,8 +86,8 @@ export default function LandingPage() {
           className="absolute inset-0 opacity-30"
           style={{
             backgroundImage: `
-              linear-gradient(to right, rgba(34, 197, 94, 0.15) 1px, transparent 1px),
-              linear-gradient(to bottom, rgba(34, 197, 94, 0.15) 1px, transparent 1px)
+              linear-gradient(to right, rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+              linear-gradient(to bottom, rgba(255, 255, 255, 0.07) 1px, transparent 1px)
             `,
             backgroundSize: '160px 160px',
             backgroundPosition: 'center top'
@@ -98,47 +98,47 @@ export default function LandingPage() {
         <div className="absolute inset-0 z-0">
            {/* Horizontal Beams */}
            <div className="absolute top-[160px] left-0 w-full h-[2px] overflow-hidden">
-             <div className="w-[300px] h-full bg-gradient-to-r from-transparent via-color-buy to-transparent beam-x blur-[1px] opacity-80" />
+             <div className="w-[300px] h-full bg-gradient-to-r from-transparent via-white to-transparent beam-x blur-[1px] opacity-80" />
            </div>
            <div className="absolute top-[480px] left-0 w-full h-[2px] overflow-hidden">
-             <div className="w-[400px] h-full bg-gradient-to-r from-transparent via-color-buy to-transparent beam-x delay-2 blur-[1px] opacity-80" />
+             <div className="w-[400px] h-full bg-gradient-to-r from-transparent via-white to-transparent beam-x delay-2 blur-[1px] opacity-80" />
            </div>
            <div className="absolute top-[800px] left-0 w-full h-[2px] overflow-hidden">
-             <div className="w-[200px] h-full bg-gradient-to-r from-transparent via-color-buy to-transparent beam-x delay-1 blur-[1px] opacity-80" />
+             <div className="w-[200px] h-full bg-gradient-to-r from-transparent via-white to-transparent beam-x delay-1 blur-[1px] opacity-80" />
            </div>
            
            {/* Vertical Beams */}
            <div className="absolute left-[calc(50%-160px)] top-0 w-[2px] h-full overflow-hidden">
-             <div className="h-[300px] w-full bg-gradient-to-b from-transparent via-color-buy to-transparent beam-y delay-1 blur-[1px] opacity-80" />
+             <div className="h-[300px] w-full bg-gradient-to-b from-transparent via-white to-transparent beam-y delay-1 blur-[1px] opacity-80" />
            </div>
            <div className="absolute left-[calc(50%+320px)] top-0 w-[2px] h-full overflow-hidden">
-             <div className="h-[400px] w-full bg-gradient-to-b from-transparent via-color-buy to-transparent beam-y delay-3 blur-[1px] opacity-80" />
+             <div className="h-[400px] w-full bg-gradient-to-b from-transparent via-white to-transparent beam-y delay-3 blur-[1px] opacity-80" />
            </div>
            <div className="absolute left-[calc(50%-480px)] top-0 w-[2px] h-full overflow-hidden">
-             <div className="h-[200px] w-full bg-gradient-to-b from-transparent via-color-buy to-transparent beam-y delay-2 blur-[1px] opacity-80" />
+             <div className="h-[200px] w-full bg-gradient-to-b from-transparent via-white to-transparent beam-y delay-2 blur-[1px] opacity-80" />
            </div>
         </div>
         
         {/* Main Glowing Cross Intersection (Left) */}
         <div className="absolute top-[240px] left-[calc(50%-480px)]">
           {/* Horizontal Beam */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[2px] bg-color-buy blur-[3px] opacity-80" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[2px] bg-white blur-[3px] opacity-60" />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[4px] bg-white blur-[4px] opacity-90" />
           
           {/* Vertical Beam */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[2px] bg-color-buy blur-[3px] opacity-80" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[2px] bg-white blur-[3px] opacity-60" />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[200px] w-[4px] bg-white blur-[4px] opacity-90" />
           
           {/* Ambient Core Glow */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-color-buy rounded-full blur-[60px] opacity-50" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-white rounded-full blur-[20px] opacity-80" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-white rounded-full blur-[60px] opacity-30" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-white rounded-full blur-[20px] opacity-70" />
         </div>
 
         {/* Secondary Glowing Cross Intersection (Right/Bottom) */}
         <div className="absolute top-[560px] right-[calc(50%-480px)] opacity-50">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[2px] bg-color-buy blur-[3px] opacity-70" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[400px] w-[2px] bg-color-buy blur-[3px] opacity-70" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-color-buy rounded-full blur-[50px] opacity-40" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[2px] bg-white blur-[3px] opacity-50" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[400px] w-[2px] bg-white blur-[3px] opacity-50" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-white rounded-full blur-[50px] opacity-30" />
         </div>
       </div>
 
@@ -148,7 +148,7 @@ export default function LandingPage() {
         <section className="pt-40 pb-28 flex flex-col items-center text-center">
           <div className="flex flex-col items-center gap-2 mb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-color-muted">
-              <span className="w-2 h-2 rounded-full bg-color-buy animate-pulse" />
+              <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
               RH Creator Capital is live on Robinhood Chain
             </div>
             {process.env.NEXT_PUBLIC_TOKEN_CA && (
@@ -169,7 +169,7 @@ export default function LandingPage() {
           <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto items-center">
             <Link 
               href="/explore" 
-              className="bg-color-buy text-[#07090c] font-semibold px-8 py-4 rounded-full hover:bg-opacity-90 hover:scale-105 transition-all shadow-[0_0_20px_rgba(34,197,94,0.3)] flex items-center justify-center gap-2"
+              className="bg-white text-[#07090c] font-semibold px-8 py-4 rounded-full hover:bg-opacity-90 hover:scale-105 transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)] flex items-center justify-center gap-2"
             >
               Explore Markets
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
@@ -200,7 +200,7 @@ export default function LandingPage() {
           <section className="py-20 mt-12">
             <div className="flex items-center justify-between mb-8">
               <div>
-                <h4 className="text-color-buy font-medium mb-2 text-sm tracking-wider uppercase">Explore</h4>
+                <h4 className="text-white font-medium mb-2 text-sm tracking-wider uppercase">Explore</h4>
                 <h2 className="text-3xl md:text-4xl font-bold text-white uppercase">Featured Social Markets</h2>
               </div>
               <Link href="/explore" className="text-color-muted hover:text-white text-sm font-medium flex items-center gap-1 transition-colors">
@@ -224,7 +224,7 @@ export default function LandingPage() {
         <section className="py-24 border-t border-white/5">
           <div className="flex flex-col md:flex-row justify-between mb-16 gap-8">
             <div>
-              <h4 className="text-color-buy font-medium mb-2 text-sm tracking-wider uppercase">Mechanics</h4>
+              <h4 className="text-white font-medium mb-2 text-sm tracking-wider uppercase">Mechanics</h4>
               <h2 className="text-3xl md:text-4xl font-bold text-white">How It Works</h2>
             </div>
           </div>
@@ -253,7 +253,7 @@ export default function LandingPage() {
         {/* Creator-First Economics */}
         <section className="py-24 border-t border-white/5 grid md:grid-cols-2 gap-16 items-center">
           <div>
-            <h4 className="text-color-buy font-medium mb-2 text-sm tracking-wider uppercase">Creator-First Economics</h4>
+            <h4 className="text-white font-medium mb-2 text-sm tracking-wider uppercase">Creator-First Economics</h4>
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">Every trade rewards the creator behind the market.</h2>
             <div className="space-y-6 text-color-muted text-lg font-light leading-relaxed">
               <p>95% of every trading fee goes directly to the creator.</p>
@@ -286,7 +286,7 @@ export default function LandingPage() {
 
         {/* Creator Economy Flywheel */}
         <section className="py-24 border-t border-white/5 text-center">
-          <h4 className="text-color-buy font-medium mb-2 text-sm tracking-wider uppercase">Growth Engine</h4>
+          <h4 className="text-white font-medium mb-2 text-sm tracking-wider uppercase">Growth Engine</h4>
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-16">Creator Economy Flywheel</h2>
           
           <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 w-full mx-auto pb-8">
@@ -310,7 +310,7 @@ export default function LandingPage() {
         {/* Live Onchain Metrics */}
         <section className="py-24 border-t border-white/5">
           <div className="flex items-center gap-3 mb-12 justify-center">
-            <span className="w-2.5 h-2.5 rounded-full bg-color-buy animate-pulse" />
+            <span className="w-2.5 h-2.5 rounded-full bg-white animate-pulse" />
             <h2 className="text-2xl font-bold text-white uppercase tracking-widest">Live Onchain Metrics</h2>
           </div>
           
@@ -447,15 +447,15 @@ export default function LandingPage() {
         </section>
 
         {/* Apply Section */}
-        <section className="py-32 border-t border-color-buy/20 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-color-buy/5 to-transparent pointer-events-none" />
+        <section className="py-32 border-t border-white/20 relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none" />
           <div className="relative z-10 text-center max-w-3xl mx-auto">
              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white uppercase tracking-tight">YOUR SOCIAL CAPITAL ALREADY HAS VALUE.</h2>
              <p className="text-color-muted text-lg font-light leading-relaxed mb-12">
                Apply to list your creator market or claim an existing market linked to your X identity.
              </p>
              <div className="flex flex-col sm:flex-row justify-center gap-4">
-               <Link href="/claim" className="bg-color-buy text-[#07090c] font-bold px-8 py-4 rounded-full hover:bg-opacity-90 hover:scale-105 transition-all shadow-[0_0_20px_rgba(34,197,94,0.2)]">
+               <Link href="/claim" className="bg-white text-[#07090c] font-bold px-8 py-4 rounded-full hover:bg-opacity-90 hover:scale-105 transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)]">
                  Apply as a Creator
                </Link>
                <Link href="/claim" className="bg-[#161A22] border border-white/10 text-white font-bold px-8 py-4 rounded-full hover:bg-white/5 transition-all">

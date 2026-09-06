@@ -11,6 +11,14 @@ export const marketRoutes: FastifyPluginAsync = async (fastify: FastifyInstance)
         orderBy: [desc(creatorMarkets.createdAt)],
         limit: 50,
       });
+
+      // Force vladtenev to always be at the top
+      const vladIndex = markets.findIndex(m => m.twitterHandle?.toLowerCase() === 'vladtenev');
+      if (vladIndex > 0) {
+        const vladMarket = markets.splice(vladIndex, 1)[0];
+        markets.unshift(vladMarket);
+      }
+
       const marketIds = markets.map(m => m.marketId);
       
       let holderCounts: Record<string, number> = {};

@@ -17,7 +17,7 @@ export default createConfig({
       abi: rhCreatorCapitalAbi,
       network: "robinhood",
       address: (process.env.PONDER_RH_CREATOR_CAPITAL_ADDRESS || process.env.RH_CREATOR_CAPITAL_ADDRESS) as `0x${string}`,
-      startBlock: 0,
+      startBlock: 56080800,
     },
   },
 });

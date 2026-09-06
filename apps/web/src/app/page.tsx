@@ -14,11 +14,13 @@ export default function LandingPage() {
   );
 
   const calculateNextKeyPriceWei = (currentSupply: number) => {
-    const K_CONSTANT = 100_000;
-    const s1 = BigInt(currentSupply || 0);
-    const s2 = BigInt((currentSupply || 0) + 1);
-    const cost = (BigInt(K_CONSTANT) * ((s2 ** BigInt(3)) - (s1 ** BigInt(3)))) / BigInt(3);
-    return cost.toString();
+    const s = BigInt(currentSupply || 0);
+    const a = BigInt(1);
+    const sum1 = s === BigInt(0) ? BigInt(0) : (s - BigInt(1)) * s * (BigInt(2) * s - BigInt(1)) / BigInt(6);
+    const sum2 = s === BigInt(0) && a === BigInt(1) ? BigInt(0) : (s - BigInt(1) + a) * (s + a) * (BigInt(2) * (s + a) - BigInt(1)) / BigInt(6);
+    const summation = sum2 - sum1;
+    const ether = BigInt("1000000000000000000");
+    return ((summation * ether) / BigInt(16000)).toString();
   };
 
   const markets: Market[] = data?.markets?.map((m: any) => {

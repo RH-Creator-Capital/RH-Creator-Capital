@@ -133,7 +133,7 @@ export const UserWithdrawalHistoryComponent = ({ address }: { address?: string }
         <thead>
           <tr className="border-b border-color-border text-color-muted text-sm uppercase">
             <th className="py-3 font-semibold">Time</th>
-            <th className="py-3 font-semibold">Amount (SOL)</th>
+            <th className="py-3 font-semibold">Amount (ETH)</th>
             <th className="py-3 font-semibold">Market Address</th>
             <th className="py-3 font-semibold">Transaction</th>
           </tr>

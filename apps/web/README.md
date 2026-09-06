@@ -1,6 +1,6 @@
-# Pump-Social-Capital - Frontend (Web)
+# Creator-Capital - Frontend (Web)
 
-This is the frontend application for **Pump-Social-Capital**, a decentralized platform enabling creators to launch personal tokens via bonding curves on the Solana blockchain.
+This is the frontend application for **Creator-Capital**, a decentralized platform enabling creators to launch personal tokens via bonding curves on the Robinhood blockchain.
 
 Built with [Next.js](https://nextjs.org) (App Router), [Tailwind CSS v4](https://tailwindcss.com), and standard Solana wallet adapters.
 

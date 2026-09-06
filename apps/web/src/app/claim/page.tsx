@@ -11,7 +11,7 @@ const WalletMultiButton = ({ className }: { className?: string }) => {
   };
 
 import { useRouter } from "next/navigation";
-import { useSocialCapital } from "../../hooks/useSocialCapital";
+import { useCreatorCapital } from "../../hooks/useCreatorCapital";
 import toast from "react-hot-toast";
 import GhostCursor from "./GhostCursor";
 
@@ -37,7 +37,7 @@ const InfoTooltip = ({ text }: { text: string }) => (
 );
 export default function ClaimPage() {
   const router = useRouter();
-  const sdk = useSocialCapital();
+  const sdk = useCreatorCapital();
   const { address: publicKey } = useAppKitAccount();
   const { signMessageAsync: signMessage } = useSignMessage();
   const publicClient = usePublicClient();

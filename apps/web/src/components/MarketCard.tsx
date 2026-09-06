@@ -134,7 +134,7 @@ export const MarketCard: FC<{ market: Market }> = ({ market }) => {
         {/* Main Metric & Sparkline */}
         <div className="flex items-end justify-between mt-auto">
           <div>
-            <div className="text-color-muted text-xs mb-1">Price (SOL)</div>
+            <div className="text-color-muted text-xs mb-1">Price (ETH)</div>
             <div className="text-2xl font-bold text-color-foreground">{priceSol}</div>
             <div className="text-color-buy text-xs mt-1">{mcapSol} Market Cap</div>
           </div>

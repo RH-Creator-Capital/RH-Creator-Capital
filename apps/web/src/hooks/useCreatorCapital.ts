@@ -4,7 +4,7 @@ import { keccak256, toHex } from 'viem';
 
 const contractAddress = process.env.NEXT_PUBLIC_RH_CREATOR_CAPITAL_ADDRESS as `0x${string}`;
 
-export function useSocialCapital() {
+export function useCreatorCapital() {
   const { writeContractAsync } = useWriteContract();
   const publicClient = usePublicClient();
 

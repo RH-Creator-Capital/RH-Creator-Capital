@@ -1,5 +1,5 @@
 {
-  "name": "@social-capital/db",
+  "name": "@creator-capital/db",
   "version": "0.1.0",
   "main": "src/index.ts",
   "scripts": {

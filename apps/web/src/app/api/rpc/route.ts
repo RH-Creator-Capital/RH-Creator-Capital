@@ -19,8 +19,18 @@ export async function POST(request: Request) {
       body,
     });
 
-    const data = await response.json();
-    return NextResponse.json(data);
+    const text = await response.text();
+    let data;
+    try {
+      data = text ? JSON.parse(text) : {};
+    } catch (e) {
+      console.error("Failed to parse RPC response as JSON. Response status:", response.status, "Body:", text.substring(0, 200));
+      return new NextResponse(text, { 
+        status: response.status, 
+        headers: { "Content-Type": response.headers.get("content-type") || "text/plain" } 
+      });
+    }
+    return NextResponse.json(data, { status: response.status });
   } catch (error) {
     console.error("RPC proxy error:", error);
     return NextResponse.json(

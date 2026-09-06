@@ -1,5 +1,5 @@
 import { FastifyInstance, FastifyPluginAsync } from "fastify";
-import { db, userPositions, creatorMarkets, tradeHistory } from "@social-capital/db";
+import { db, userPositions, creatorMarkets, tradeHistory } from "@creator-capital/db";
 import { eq, inArray, and } from "drizzle-orm";
 const K_CONSTANT = 100_000n; // 0.0001 ETH in ethAmountWei
 
@@ -51,7 +51,7 @@ export const portfolioRoutes: FastifyPluginAsync = async (fastify: FastifyInstan
         };
       });
       
-      const { feeWithdrawals } = await import("@social-capital/db");
+      const { feeWithdrawals } = await import("@creator-capital/db");
       const withdrawals = await db.query.feeWithdrawals.findMany({
         where: and(eq(feeWithdrawals.network, network), eq(feeWithdrawals.creatorWallet, wallet)),
       });
@@ -113,7 +113,7 @@ export const portfolioRoutes: FastifyPluginAsync = async (fastify: FastifyInstan
     }
 
     try {
-      const { feeWithdrawals } = await import("@social-capital/db");
+      const { feeWithdrawals } = await import("@creator-capital/db");
       
       const withdrawals = await db.query.feeWithdrawals.findMany({
         where: and(eq(feeWithdrawals.network, network), eq(feeWithdrawals.creatorWallet, wallet)),

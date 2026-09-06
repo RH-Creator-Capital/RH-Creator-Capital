@@ -1,5 +1,5 @@
 import { FastifyInstance, FastifyPluginAsync } from "fastify";
-import { db, creatorMarkets } from "@social-capital/db";
+import { db, creatorMarkets } from "@creator-capital/db";
 import { sql, desc, eq, and } from "drizzle-orm";
 
 export const marketRoutes: FastifyPluginAsync = async (fastify: FastifyInstance) => {

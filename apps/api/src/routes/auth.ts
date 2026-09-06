@@ -1,6 +1,6 @@
 import { FastifyInstance, FastifyPluginAsync } from "fastify";
 import crypto from "crypto";
-import { db, users, activityLogs, creatorMarkets } from "@social-capital/db";
+import { db, users, activityLogs, creatorMarkets } from "@creator-capital/db";
 import { eq, and } from "drizzle-orm";
 import { verifyMessage } from "viem";
 import { privateKeyToAccount } from "viem/accounts";

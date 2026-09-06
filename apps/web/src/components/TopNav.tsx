@@ -7,7 +7,7 @@ import { useAccount, useDisconnect, useSignMessage } from "wagmi";
 import { useAppKit } from "@reown/appkit/react";
 import { useEffect, useState, useRef } from "react";
 import toast from "react-hot-toast";
-import { useSocialCapital } from "../hooks/useSocialCapital";
+import { useCreatorCapital } from "../hooks/useCreatorCapital";
 
 export const TopNav = () => {
   const { isConnected: connected, address: publicKey, connector: wallet } = useAccount();
@@ -28,7 +28,7 @@ export const TopNav = () => {
   const [showDisconnectModal, setShowDisconnectModal] = useState(false);
   const authPromptedRef = useRef(false);
   
-  const sdk = useSocialCapital();
+  const sdk = useCreatorCapital();
   const [totalKeys, setTotalKeys] = useState<number>(0);
 
   useEffect(() => {
@@ -50,7 +50,8 @@ export const TopNav = () => {
     fetchTotalKeys();
     const interval = setInterval(fetchTotalKeys, 5000);
     return () => clearInterval(interval);
-  }, [publicKey, sdk]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [publicKey]);
 
   useEffect(() => {
     setMounted(true);

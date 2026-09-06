@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { db, creatorMarkets, feeWithdrawals, users } from "@social-capital/db";
+import { db, creatorMarkets, feeWithdrawals, users } from "@creator-capital/db";
 import { desc, eq, and, or, sql } from "drizzle-orm";
 
 export const usersRoutes = async (fastify: FastifyInstance) => {

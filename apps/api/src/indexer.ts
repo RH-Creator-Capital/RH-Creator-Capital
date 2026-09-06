@@ -1,8 +1,9 @@
 import { createPublicClient, http, parseAbiItem, Log } from "viem";
-import { db, creatorMarkets, userPositions, tradeHistory, priceCandles, protocolFees, feeWithdrawals } from "@social-capital/db";
+import { db, creatorMarkets, userPositions, tradeHistory, priceCandles, protocolFees, feeWithdrawals } from "@creator-capital/db";
 import { eq, and, sql } from "drizzle-orm";
 import { rhCreatorCapitalAbi } from "./abis/rhCreatorCapital";
 import { randomUUID } from "crypto";
+import { realtimeEmitter } from "./services/emitter";
 
 const rpcUrl = process.env.RH_CHAIN_RPC_URL as string;
 const contractAddress = process.env.RH_CREATOR_CAPITAL_ADDRESS as `0x${string}`;
@@ -67,7 +68,7 @@ export async function startIndexer() {
 
 // ================= Event Handlers =================
 
-async function handleCreatorMarketCreated(log: any) {
+export async function handleCreatorMarketCreated(log: any) {
   try {
     const { marketId, xUserId, timestamp } = log.args;
     const txHash = log.transactionHash;
@@ -99,7 +100,91 @@ async function handleCreatorMarketCreated(log: any) {
   }
 }
 
-async function handleKeysBought(log: any) {
+function getSpotPriceWei(supply: number): string {
+  const s = BigInt(supply);
+  const a = 1n;
+  const sum1 = s === 0n ? 0n : (s - 1n) * s * (2n * s - 1n) / 6n;
+  const sum2 = s === 0n && a === 1n ? 0n : (s - 1n + a) * (s + a) * (2n * (s + a) - 1n) / 6n;
+  const summation = sum2 - sum1;
+  const ether = 1000000000000000000n;
+  return ((summation * ether) / 16000n).toString();
+}
+
+async function updateCandles(marketId: string, supply: number, volumeWei: string, date: Date) {
+  const priceWei = getSpotPriceWei(supply);
+  const resolutions = [
+    { name: "1m", ms: 60 * 1000 },
+    { name: "5m", ms: 5 * 60 * 1000 },
+    { name: "15m", ms: 15 * 60 * 1000 },
+    { name: "1h", ms: 60 * 60 * 1000 },
+    { name: "1d", ms: 24 * 60 * 60 * 1000 },
+  ];
+
+  for (const res of resolutions) {
+    const periodStart = new Date(Math.floor(date.getTime() / res.ms) * res.ms);
+    
+    const existing = await db.query.priceCandles.findFirst({
+      where: and(
+        eq(priceCandles.network, network),
+        eq(priceCandles.marketId, marketId),
+        eq(priceCandles.resolution, res.name),
+        eq(priceCandles.timestamp, periodStart)
+      )
+    });
+
+    if (existing) {
+      const high = BigInt(priceWei) > BigInt(existing.high) ? priceWei : existing.high;
+      const low = BigInt(priceWei) < BigInt(existing.low) ? priceWei : existing.low;
+      await db.update(priceCandles)
+        .set({
+          high,
+          low,
+          close: priceWei,
+          volumeWei: (BigInt(existing.volumeWei) + BigInt(volumeWei)).toString()
+        })
+        .where(eq(priceCandles.id, existing.id));
+
+      if (res.name === "1m") {
+        realtimeEmitter.emit("candle_update", {
+          marketId,
+          resolution: res.name,
+          timestamp: periodStart.toISOString(),
+          open: existing.open,
+          high,
+          low,
+          close: priceWei,
+          volumeWei: (BigInt(existing.volumeWei) + BigInt(volumeWei)).toString()
+        });
+      }
+    } else {
+      await db.insert(priceCandles).values({
+        network,
+        marketId,
+        timestamp: periodStart,
+        resolution: res.name,
+        open: priceWei,
+        high: priceWei,
+        low: priceWei,
+        close: priceWei,
+        volumeWei
+      });
+      if (res.name === "1m") {
+        realtimeEmitter.emit("candle_update", {
+          marketId,
+          resolution: res.name,
+          timestamp: periodStart.toISOString(),
+          open: priceWei,
+          high: priceWei,
+          low: priceWei,
+          close: priceWei,
+          volumeWei
+        });
+      }
+    }
+  }
+}
+
+export async function handleKeysBought(log: any) {
   try {
     const { marketId, buyer, keyAmount, ethAmount, protocolFee, newSupply } = log.args;
     const txHash = log.transactionHash;
@@ -149,6 +234,8 @@ async function handleKeysBought(log: any) {
       WHERE market_id = ${marketId} AND network = ${network}
     `);
 
+    await updateCandles(marketId, Number(newSupply), ethAmount.toString(), new Date());
+
     if (protocolFee > 0n) {
       await db.insert(protocolFees).values({
         network,
@@ -162,7 +249,7 @@ async function handleKeysBought(log: any) {
   }
 }
 
-async function handleKeysSold(log: any) {
+export async function handleKeysSold(log: any) {
   try {
     const { marketId, seller, keyAmount, ethReceived, protocolFee, newSupply } = log.args;
     const txHash = log.transactionHash;
@@ -202,6 +289,8 @@ async function handleKeysSold(log: any) {
           updated_at = NOW()
       WHERE market_id = ${marketId} AND network = ${network}
     `);
+
+    await updateCandles(marketId, Number(newSupply), ethReceived.toString(), new Date());
 
     if (protocolFee > 0n) {
       await db.insert(protocolFees).values({

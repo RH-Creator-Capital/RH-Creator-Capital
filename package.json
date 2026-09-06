@@ -1,5 +1,5 @@
 {
-  "name": "social-capital",
+  "name": "creator-capital",
   "private": true,
   "scripts": {
     "build": "turbo run build",
@@ -9,7 +9,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "@social-capital/db": "workspace:*",
+    "@creator-capital/db": "workspace:*",
     "drizzle-orm": "^0.30.9",
     "@types/node": "^26.3.0",
     "dotenv": "^16.4.5",

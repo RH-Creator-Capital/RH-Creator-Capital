@@ -1,7 +1,7 @@
 import Fastify from "fastify";
 import * as dotenv from "dotenv";
 import { resolve } from "path";
-import { db, activityLogs } from "@social-capital/db";
+import { db, activityLogs } from "@creator-capital/db";
 import fastifyWebsocket from "@fastify/websocket";
 import fastifyRateLimit from "@fastify/rate-limit";
 import fastifyCors from "@fastify/cors";

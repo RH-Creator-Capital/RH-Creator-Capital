@@ -13,7 +13,6 @@
   "references": [
     { "path": "./apps/web" },
     { "path": "./apps/api" },
-    { "path": "./apps/indexer" },
-    { "path": "./packages/contracts" }
+    { "path": "./apps/indexer" }
   ]
 }

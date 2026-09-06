@@ -6,7 +6,7 @@ import { TradeHistoryComponent } from "@/components/TradeHistoryComponent";
 import { CreatorDashboard } from "@/components/CreatorDashboard";
 import { use, useState, useEffect } from "react";
 import useSWR from "swr";
-import { useSocialCapital } from "../../../hooks/useSocialCapital";
+import { useCreatorCapital } from "../../../hooks/useCreatorCapital";
 import { useAppKitAccount } from "@reown/appkit/react";
 import { ClaimBadge } from '@/components/ClaimBadge';
 
@@ -29,7 +29,7 @@ export default function CreatorPage({ params }: PageProps) {
     return styles[hash % styles.length];
   };
 
-  const sdk = useSocialCapital();
+  const sdk = useCreatorCapital();
   const { address: publicKey } = useAppKitAccount();
   const [onChainMarket, setOnChainMarket] = useState<any>(null);
   const [isChainLoading, setIsChainLoading] = useState(true);
@@ -40,7 +40,7 @@ export default function CreatorPage({ params }: PageProps) {
     if (!publicKey || !sdk || !id) return;
     const fetchBalance = async () => {
       try {
-        const marketId = sdk.getMarketId(id as string);
+        const marketId = (id as string).startsWith('0x') ? (id as string) : sdk.getMarketId(id as string);
         const pos = await sdk.getUserPosition(marketId, publicKey as string);
         setKeyBalance(pos?.keys ? Number(pos.keys) : 0);
       } catch (e) {
@@ -52,7 +52,8 @@ export default function CreatorPage({ params }: PageProps) {
     // Set interval to poll for balance updates
     const interval = setInterval(fetchBalance, 5000);
     return () => clearInterval(interval);
-  }, [publicKey, sdk, id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [publicKey, id]);
   
   // Fetch from database API
   const API_URL = process.env.NEXT_PUBLIC_API_URL as string;
@@ -74,7 +75,7 @@ export default function CreatorPage({ params }: PageProps) {
   useEffect(() => {
     if (sdk && id) {
       try {
-        const marketId = sdk.getMarketId(id as string);
+        const marketId = (id as string).startsWith('0x') ? (id as string) : sdk.getMarketId(id as string);
         sdk.getMarketState(marketId)
           .then((account: any) => {
             setOnChainMarket(account);
@@ -89,16 +90,17 @@ export default function CreatorPage({ params }: PageProps) {
         setIsChainLoading(false);
       }
     }
-  }, [sdk, id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   const isLoadingTotal = isLoading || (isChainLoading && !dbMarket);
   
   // Use DB market, or construct from on-chain data if DB sync failed
   const finalMarket = dbMarket || (onChainMarket ? {
-    supply: onChainMarket.supply.toNumber(),
-    reserveWei: onChainMarket.reserveWei.toNumber(),
+    supply: Number(onChainMarket.supply),
+    reserveWei: onChainMarket.reserve.toString(),
     claimed: onChainMarket.claimed,
-    twitterHandle: new TextDecoder().decode(Uint8Array.from(onChainMarket.creatorId).filter(b => b !== 0))
+    twitterHandle: onChainMarket.xUserId
   } : null);
 
   if (isLoadingTotal) {
@@ -206,11 +208,12 @@ export default function CreatorPage({ params }: PageProps) {
   }
 
   const calculateNextKeyPrice = (currentSupply: number) => {
-    const K_CONSTANT = 100_000;
-    const s1 = BigInt(currentSupply);
-    const s2 = BigInt(currentSupply + 1);
-    const cost = (BigInt(K_CONSTANT) * ((s2 ** BigInt(3)) - (s1 ** BigInt(3)))) / BigInt(3);
-    return Number(cost) / 1e18;
+    const s = BigInt(currentSupply);
+    const a = BigInt(1);
+    const sum1 = s === BigInt(0) ? BigInt(0) : (s - BigInt(1)) * s * (BigInt(2) * s - BigInt(1)) / BigInt(6);
+    const sum2 = s === BigInt(0) && a === BigInt(1) ? BigInt(0) : (s - BigInt(1) + a) * (s + a) * (BigInt(2) * (s + a) - BigInt(1)) / BigInt(6);
+    const summation = sum2 - sum1;
+    return Number(summation) / 16000;
   };
 
   const supply = finalMarket.supply || 0;
@@ -599,7 +602,7 @@ export default function CreatorPage({ params }: PageProps) {
                 <div className="pt-4 mt-4 border-t border-color-border/30">
                   <CreatorDashboard 
                     marketId={id as string} 
-                    creatorWallet={onChainMarket?.creatorWallet?.toBase58() || ""} 
+                    creatorWallet={onChainMarket?.creatorWallet || ""} 
                     claimed={!!finalMarket.claimed} 
                     twitterHandle={finalMarket.twitterHandle || ""} 
                   />

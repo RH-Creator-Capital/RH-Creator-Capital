@@ -1,7 +1,7 @@
 "use client";
 
 import { FC, useState, useEffect } from "react";
-import { useSocialCapital } from "../hooks/useSocialCapital";
+import { useCreatorCapital } from "../hooks/useCreatorCapital";
 
 import { useAppKit, useAppKitAccount } from "@reown/appkit/react";
 import { useSignMessage } from "wagmi";
@@ -11,7 +11,7 @@ import toast from "react-hot-toast";
 const K_CONSTANT = 100_000; // 0.0001 ETH in wei
 
 export const TradingWidget: FC<{ marketId: string, twitterHandle?: string }> = ({ marketId, twitterHandle }) => {
-  const sdk = useSocialCapital();
+  const sdk = useCreatorCapital();
   const { address: publicKey } = useAppKitAccount();
   const [tradeType, setTradeType] = useState<"buy" | "sell">("buy");
   const [amount, setAmount] = useState("");
@@ -80,23 +80,27 @@ export const TradingWidget: FC<{ marketId: string, twitterHandle?: string }> = (
     return () => {
       if (ws) ws.close();
     };
-  }, [sdk, twitterHandle, publicKey, marketId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [twitterHandle, publicKey, marketId]);
 
   // Bonding Curve Math
+  const calculatePrice = (supply: number, amount: number) => {
+    const s = BigInt(supply);
+    const a = BigInt(amount);
+    const sum1 = s === BigInt(0) ? BigInt(0) : (s - BigInt(1)) * s * (BigInt(2) * s - BigInt(1)) / BigInt(6);
+    const sum2 = s === BigInt(0) && a === BigInt(1) ? BigInt(0) : (s - BigInt(1) + a) * (s + a) * (BigInt(2) * (s + a) - BigInt(1)) / BigInt(6);
+    const summation = sum2 - sum1;
+    return Number(summation) / 16000;
+  };
+
   const calculateBuyCost = (currentSupply: number, buyAmount: number) => {
     if (buyAmount === 0) return 0;
-    const s1 = BigInt(currentSupply);
-    const s2 = BigInt(currentSupply + buyAmount);
-    const cost = (BigInt(K_CONSTANT) * ((s2 ** BigInt(3)) - (s1 ** BigInt(3)))) / BigInt(3);
-    return Number(cost) / 1e18; // Convert wei to ETH
+    return calculatePrice(currentSupply, buyAmount);
   };
 
   const calculateSellReturn = (currentSupply: number, sellAmount: number) => {
     if (sellAmount === 0 || currentSupply < sellAmount) return 0;
-    const s2 = BigInt(currentSupply);
-    const s1 = BigInt(currentSupply - sellAmount);
-    const ret = (BigInt(K_CONSTANT) * ((s2 ** BigInt(3)) - (s1 ** BigInt(3)))) / BigInt(3);
-    return Number(ret) / 1e18;
+    return calculatePrice(currentSupply - sellAmount, sellAmount);
   };
 
   const parsedAmount = parseInt(amount) || 0;

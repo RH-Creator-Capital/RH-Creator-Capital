@@ -1,5 +1,5 @@
 import { FastifyInstance, FastifyPluginAsync } from "fastify";
-import { db, protocolFees, pscBuybacks, pscBurns, activityLogs } from "@social-capital/db";
+import { db, protocolFees, pscBuybacks, pscBurns, activityLogs } from "@creator-capital/db";
 import { sum, desc, eq, and, sql } from "drizzle-orm";
 export const protocolRoutes: FastifyPluginAsync = async (fastify: FastifyInstance) => {
   const network = process.env.RH_NETWORK || "devnet";

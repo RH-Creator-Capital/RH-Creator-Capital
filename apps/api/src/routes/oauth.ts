@@ -1,5 +1,5 @@
 import { FastifyInstance, FastifyPluginAsync } from "fastify";
-import { db, users, creatorMarkets, activityLogs } from "@social-capital/db";
+import { db, users, creatorMarkets, activityLogs } from "@creator-capital/db";
 import { eq } from "drizzle-orm";
 import jwt from "jsonwebtoken";
 import { TwitterApi } from "twitter-api-v2";

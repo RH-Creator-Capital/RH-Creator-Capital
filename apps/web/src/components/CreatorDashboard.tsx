@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useAppKitAccount, useAppKit } from "@reown/appkit/react";
 import { useSignMessage } from "wagmi";
-import { useSocialCapital } from "../hooks/useSocialCapital";
+import { useCreatorCapital } from "../hooks/useCreatorCapital";
 
 import toast from "react-hot-toast";
 
@@ -25,7 +25,7 @@ export const CreatorDashboard = ({ marketId, creatorWallet, claimed, twitterHand
   const { address: publicKey } = useAppKitAccount();
   const { signMessageAsync: signMessage } = useSignMessage();
   
-  const sdk = useSocialCapital();
+  const sdk = useCreatorCapital();
   const [vaultBalance, setVaultBalance] = useState<number | null>(null);
   const [analytics, setAnalytics] = useState<{ totalVolumeWei: string, holderCount: number } | null>(null);
   const [isWithdrawing, setIsWithdrawing] = useState(false);
@@ -141,7 +141,8 @@ export const CreatorDashboard = ({ marketId, creatorWallet, claimed, twitterHand
     // Set up an interval to poll for updates
     const interval = setInterval(fetchDashboardData, 10000);
     return () => clearInterval(interval);
-  }, [shouldShow, sdk, marketId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shouldShow, marketId]);
 
   if (!shouldShow) return null;
 

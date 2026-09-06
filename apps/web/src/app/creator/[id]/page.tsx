@@ -537,11 +537,10 @@ export default function CreatorPage({ params }: PageProps) {
                   <span className="text-color-muted">{finalMarket.claimed ? "Claimed by" : "Owner"}</span>
                   {finalMarket.claimed ? (
                     <Link 
-                      href={`/profile/${onChainMarket.creatorWallet.toBase58()}`}
-                      className="font-mono text-white hover:text-color-buy transition-colors"
-                      title="View Profile"
+                      href={`/profile/${onChainMarket.creatorWallet}`}
+                      className="font-mono bg-white/5 px-3 py-1 rounded-full border border-white/10 hover:border-emerald-500/50 hover:bg-emerald-500/10 transition-colors"
                     >
-                      {onChainMarket.creatorWallet.toBase58().slice(0, 6)}...{onChainMarket.creatorWallet.toBase58().slice(-6)}
+                      {onChainMarket.creatorWallet.slice(0, 6)}...{onChainMarket.creatorWallet.slice(-4)}
                     </Link>
                   ) : (
                     <span className="font-mono text-color-muted">Unclaimed</span>

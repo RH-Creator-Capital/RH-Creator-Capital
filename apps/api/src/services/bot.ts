@@ -75,7 +75,14 @@ export const startTradingBot = () => {
       console.log(`🤖 Selected Market: @${randomMarket.twitterHandle} (${randomMarket.marketId})`);
 
       // Pick a random amount between 1 and 20
-      const amount = BigInt(Math.floor(Math.random() * 20) + 1);
+      let amount = BigInt(Math.floor(Math.random() * 20) + 1);
+      
+      // FIX: If the market is brand new (supply = 0), force the bot to buy exactly 1 key
+      // to avoid triggering the underflow bug in the smart contract.
+      if (randomMarket.supply === 0) {
+        amount = 1n;
+        console.log(`🤖 Market is new (supply 0). Forcing amount to 1 key to avoid contract underflow.`);
+      }
       
       // Decide BUY or SELL (e.g., 50% chance each)
       // Check if we have keys to sell first

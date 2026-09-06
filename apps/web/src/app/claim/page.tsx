@@ -278,8 +278,8 @@ export default function ClaimPage() {
 
     const popup = window.open(
       `${apiUrl}/api/oauth/twitter/login?redirect_to=${redirectUrl}`,
-      "twitter_oauth",
-      `width=${width},height=${height},left=${left},top=${top},toolbar=0,status=0,menubar=0`
+      `TwitterLogin_${Date.now()}`,
+      `width=${width},height=${height},left=${left},top=${top},toolbar=0,location=0,menubar=0`
     );
 
     if (!popup) {
@@ -883,6 +883,17 @@ export default function ClaimPage() {
                           <p className="text-red-500 text-xs mt-1">Please enter a valid URL (e.g. https://...)</p>
                         )}
                       </>
+                    )}
+                    
+                    {twitterAvatar && isValidUrl(twitterAvatar) && !avatarUploadError && (
+                      <div className="mt-3 flex justify-center">
+                        <div className="rounded-full overflow-hidden border border-color-border/50 h-24 w-24 relative bg-[#161A22] shadow-lg flex items-center justify-center group">
+                          <img src={twitterAvatar} alt="Avatar Preview" className="w-full h-full object-cover" />
+                          <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                            <span className="text-[10px] text-white font-semibold tracking-wider uppercase">Preview</span>
+                          </div>
+                        </div>
+                      </div>
                     )}
                   </div>
                 </div>

@@ -219,7 +219,7 @@ export const CreatorDashboard = ({ marketId, creatorWallet, claimed, twitterHand
 
     window.open(
       `${apiUrl}/api/oauth/twitter/login?redirect_to=${redirectUrl}`,
-      "TwitterLogin",
+      `TwitterLogin_${Date.now()}`,
       `width=${width},height=${height},left=${left},top=${top},toolbar=0,location=0,menubar=0`
     );
   };
@@ -397,18 +397,11 @@ export const CreatorDashboard = ({ marketId, creatorWallet, claimed, twitterHand
         </div>
 
         {!publicKey ? (
-          <WalletMultiButton className="!w-full !justify-center !bg-amber-600 hover:!bg-amber-500 !text-white !px-6 !py-3 !rounded-lg !font-bold !shadow-lg !shadow-amber-600/20 !transition-all" />
+          <WalletMultiButton className="!w-full !justify-center !bg-white hover:!opacity-90 !text-[#07090c] !px-6 !py-3 !rounded-lg !font-bold !shadow-lg !transition-all" />
         ) : !linkedHandle ? (
           <button
             onClick={handleTwitterLogin}
-            className="w-full bg-[#1DA1F2] hover:bg-[#1a8cd8] text-white px-6 py-3 rounded-lg font-bold shadow-lg shadow-[#1DA1F2]/20 transition-all flex items-center justify-center gap-2"
-          >
-            Connect X (Twitter)
-          </button>
-        ) : !linkedHandle ? (
-          <button
-            onClick={handleTwitterLogin}
-            className="w-full bg-[#1DA1F2] hover:bg-[#1a8cd8] text-white px-6 py-3 rounded-lg font-bold shadow-lg shadow-[#1DA1F2]/20 transition-all flex items-center justify-center gap-2"
+            className="w-full bg-white hover:opacity-90 text-[#07090c] px-6 py-3 rounded-lg font-bold shadow-lg shadow-white/20 transition-all flex items-center justify-center gap-2"
           >
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
             Connect X (Twitter)
@@ -422,7 +415,7 @@ export const CreatorDashboard = ({ marketId, creatorWallet, claimed, twitterHand
                   <span className="text-red-300/80">Does not match market creator (@{twitterHandle}).</span>
                   <button 
                     onClick={handleTwitterLogin} 
-                    className="px-4 py-2 bg-[#1DA1F2] hover:bg-[#1a8cd8] text-white rounded-lg font-semibold transition-all flex items-center gap-2 shadow-sm"
+                    className="px-4 py-2 bg-white hover:opacity-90 text-[#07090c] rounded-lg font-semibold transition-all flex items-center gap-2 shadow-sm"
                   >
                     <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                     Switch X Account
@@ -434,7 +427,7 @@ export const CreatorDashboard = ({ marketId, creatorWallet, claimed, twitterHand
             <button
               onClick={handleClaimMarket}
               disabled={isClaiming || linkedHandle.toLowerCase() !== twitterHandle.toLowerCase()}
-              className="w-full bg-amber-600 hover:bg-amber-500 disabled:opacity-50 disabled:cursor-not-allowed text-white px-6 py-3 rounded-lg font-bold shadow-lg shadow-amber-600/20 transition-all flex items-center justify-center gap-2"
+              className="w-full bg-white hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed text-[#07090c] px-6 py-3 rounded-lg font-bold shadow-lg transition-all flex items-center justify-center gap-2"
             >
               {isClaiming ? (
                 <>

@@ -126,6 +126,6 @@ export const pscBurns = pgTable("psc_burns", {
   id: uuid("id").primaryKey().defaultRandom(),
   network: text("network").notNull().default("devnet"),
   signature: text("signature").unique().notNull(),
-  amount: bigint("amount", { mode: "number" }).notNull(), // PSC tokens burned
+  amount: bigint("amount", { mode: "number" }).notNull(), // RCC tokens burned
   timestamp: timestamp("timestamp").defaultNow().notNull(),
 });

@@ -304,7 +304,7 @@ export const authRoutes: FastifyPluginAsync = async (fastify: FastifyInstance) =
 
       // 2. Fetch market to verify ownership (Check DB first, then fallback to RPC)
       let isOwner = false;
-      const network = process.env.EVM_NETWORK as string;
+      const network = (process.env.RH_NETWORK || process.env.EVM_NETWORK || "devnet") as string;
       const market = await db.query.creatorMarkets.findFirst({
         where: and(eq(creatorMarkets.network, network), eq(creatorMarkets.marketId, marketId))
       });

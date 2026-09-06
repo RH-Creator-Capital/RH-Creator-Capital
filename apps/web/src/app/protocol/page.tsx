@@ -62,7 +62,7 @@ export default function ProtocolDashboard() {
       <div className="lg:col-span-3 flex flex-col gap-5 lg:border-r lg:border-color-border/30 lg:pr-8 lg:py-6">
         <div className="mb-2">
           <h1 className="text-2xl font-bold text-white tracking-tight mb-1">Protocol Dashboard</h1>
-          <p className="text-color-muted text-xs leading-relaxed">Transparent tracking of protocol fees, automated buybacks, and $PSC burns.</p>
+          <p className="text-color-muted text-xs leading-relaxed">Transparent tracking of protocol fees, automated buybacks, and $RCC burns.</p>
         </div>
 
         {/* KPI Cards — same style as PortfolioStatsCard */}
@@ -78,12 +78,12 @@ export default function ProtocolDashboard() {
               <span className="font-semibold text-white">{buybackEth} ETH</span>
             </div>
             <div className="flex justify-between border-b border-color-border/50 pb-3">
-              <span className="text-color-muted">$PSC Acquired</span>
-              <span className="font-semibold text-white">{pscBought} $PSC</span>
+              <span className="text-color-muted">$RCC Acquired</span>
+              <span className="font-semibold text-white">{pscBought} $RCC</span>
             </div>
             <div className="flex justify-between pb-1">
-              <span className="text-color-muted">$PSC Burned</span>
-              <span className="font-semibold text-color-sell">{pscBurned} $PSC</span>
+              <span className="text-color-muted">$RCC Burned</span>
+              <span className="font-semibold text-color-sell">{pscBurned} $RCC</span>
             </div>
           </div>
         </div>
@@ -172,7 +172,7 @@ export default function ProtocolDashboard() {
                   </div>
                   <div className="text-xs text-color-muted font-mono bg-white/[0.02] border border-color-border/30 p-2.5 rounded-lg break-words leading-relaxed">
                     {isSkipped && details.reason && `${details.reason} (Vault: ${formatEth(details.vaultBalance || 0)} ETH)`}
-                    {isSuccess && `Spent: ${formatEth(details.ethSpent || 0)} ETH | Burned: ${(details.pscReceived / 1e6).toFixed(2)} PSC`}
+                    {isSuccess && `Spent: ${formatEth(details.ethSpent || 0)} ETH | Burned: ${(details.pscReceived / 1e6).toFixed(2)} RCC`}
                     {!isSkipped && !isSuccess && (log.errorMessage || "Unknown Error")}
                   </div>
                 </div>

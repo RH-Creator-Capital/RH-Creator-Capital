@@ -187,7 +187,7 @@ export default function LandingPage() {
             <span className="hidden md:inline">•</span>
             <span>5% → protocol</span>
             <span className="hidden md:inline">•</span>
-            <span>100% of protocol revenue → $PSC buybacks</span>
+            <span>100% of protocol revenue → $RCC buybacks</span>
           </div>
           
           <div className="-mx-6">
@@ -233,7 +233,7 @@ export default function LandingPage() {
               { step: '01', title: 'Discover', desc: 'Find creator markets based on attention and social momentum.' },
               { step: '02', title: 'Trade', desc: 'Buy and sell Creator Keys on Robinhood Chain.' },
               { step: '03', title: 'Creators Earn', desc: 'Trading activity generates creator rewards.' },
-              { step: '04', title: 'PSC Buyback', desc: 'Protocol revenue is used to buy back $PSC.' }
+              { step: '04', title: 'RCC Buyback', desc: 'Protocol revenue is used to buy back $RCC.' }
             ].map((item, idx) => (
               <div key={idx} className="group relative p-6 bg-white/[0.02] border border-white/[0.03] rounded-2xl hover:bg-white/[0.04] hover:border-white/[0.08] transition-colors duration-300 overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-[40px] -mr-10 -mt-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -258,7 +258,7 @@ export default function LandingPage() {
             <div className="space-y-6 text-color-muted text-lg font-light leading-relaxed">
               <p>95% of every trading fee goes directly to the creator.</p>
               <p>The remaining 5% belongs to RH Creator Capital.</p>
-              <p>100% of RH Creator Capital protocol trading revenue is used to buy back $PSC.</p>
+              <p>100% of RH Creator Capital protocol trading revenue is used to buy back $RCC.</p>
             </div>
           </div>
           <div className="group bg-white/[0.02] border border-white/[0.03] rounded-3xl p-10 relative overflow-hidden hover:bg-white/[0.04] hover:border-white/[0.08] transition-colors duration-300">
@@ -278,7 +278,7 @@ export default function LandingPage() {
               </div>
               <div>
                 <span className="text-4xl font-medium text-white/90 tracking-tight">100%</span>
-                <p className="font-medium text-white/60 mt-2 tracking-wide text-sm">OF PROTOCOL REVENUE → $PSC BUYBACK</p>
+                <p className="font-medium text-white/60 mt-2 tracking-wide text-sm">OF PROTOCOL REVENUE → $RCC BUYBACK</p>
               </div>
             </div>
           </div>
@@ -290,7 +290,7 @@ export default function LandingPage() {
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-16">Creator Economy Flywheel</h2>
           
           <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 w-full mx-auto pb-8">
-            {['SOCIAL INFLUENCE', 'CREATOR MARKET', 'KEY TRADING', 'CREATOR REWARDS', 'PROTOCOL REVENUE', '$PSC BUYBACKS'].map((step, i, arr) => (
+            {['SOCIAL INFLUENCE', 'CREATOR MARKET', 'KEY TRADING', 'CREATOR REWARDS', 'PROTOCOL REVENUE', '$RCC BUYBACKS'].map((step, i, arr) => (
               <div key={step} className="flex items-center gap-4 md:gap-6">
                 <div className="px-6 py-4 bg-white/[0.02] border border-white/[0.03] rounded-xl font-medium text-sm tracking-wide text-white/90 hover:bg-white/[0.04] hover:border-white/[0.08] transition-colors duration-300 cursor-default whitespace-nowrap">
                   {step}
@@ -303,7 +303,7 @@ export default function LandingPage() {
           </div>
           
           <p className="text-white/50 mt-12 max-w-2xl mx-auto font-light leading-relaxed">
-            More creator activity generates more trading volume. More trading volume generates more creator rewards. Protocol revenue flows into $PSC buybacks.
+            More creator activity generates more trading volume. More trading volume generates more creator rewards. Protocol revenue flows into $RCC buybacks.
           </p>
         </section>
 
@@ -366,7 +366,7 @@ export default function LandingPage() {
                       <div className="group text-center p-6 bg-white/[0.02] border border-white/[0.03] rounded-2xl hover:bg-white/[0.04] hover:border-white/[0.08] transition-colors duration-300 relative overflow-hidden">
                         <div className="absolute top-0 right-0 w-24 h-24 bg-white/5 rounded-full blur-[30px] -mr-8 -mt-8 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                         <div className="relative z-10">
-                          <p className="text-white/40 text-xs mb-2 font-medium tracking-widest uppercase group-hover:text-white/70 transition-colors">$PSC Buyback Value</p>
+                          <p className="text-white/40 text-xs mb-2 font-medium tracking-widest uppercase group-hover:text-white/70 transition-colors">$RCC Buyback Value</p>
                           <p className="text-3xl font-medium text-white/90 tracking-tight">Coming Soon</p>
                         </div>
                       </div>

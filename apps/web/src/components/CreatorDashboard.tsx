@@ -224,6 +224,11 @@ export const CreatorDashboard = ({ marketId, creatorWallet, claimed, twitterHand
     );
   };
 
+  const handleDisconnectX = () => {
+    localStorage.removeItem("oauthToken");
+    setLinkedHandle(null);
+  };
+
   const copyWithdrawSignature = () => {
     if (withdrawModalSignature) {
       navigator.clipboard.writeText(withdrawModalSignature);
@@ -408,8 +413,17 @@ export const CreatorDashboard = ({ marketId, creatorWallet, claimed, twitterHand
           </button>
         ) : (
           <div className="flex flex-col gap-3">
-            <div className={`text-xs text-center px-3 py-2 rounded-lg border ${linkedHandle.toLowerCase() === twitterHandle.toLowerCase() ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' : 'bg-red-500/10 border-red-500/20 text-red-400'}`}>
-              Connected to X as <strong>@{linkedHandle}</strong>
+            <div className={`text-xs px-4 py-3 rounded-lg border flex flex-col items-center justify-center gap-2 ${linkedHandle.toLowerCase() === twitterHandle.toLowerCase() ? 'bg-white/5 border-white/10 text-white/90' : 'bg-red-500/10 border-red-500/20 text-red-400'}`}>
+              <div className="flex items-center gap-2">
+                <span>Connected to X as <strong>@{linkedHandle}</strong></span>
+                <button 
+                  onClick={handleDisconnectX}
+                  className="px-2 py-1 rounded bg-white/10 hover:bg-white/20 text-white/70 hover:text-white transition-colors text-[10px] uppercase font-bold tracking-wider"
+                  title="Disconnect X account"
+                >
+                  Unlink
+                </button>
+              </div>
               {linkedHandle.toLowerCase() !== twitterHandle.toLowerCase() && (
                 <div className="mt-3 flex flex-col items-center gap-2">
                   <span className="text-red-300/80">Does not match market creator (@{twitterHandle}).</span>

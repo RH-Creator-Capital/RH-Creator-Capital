@@ -370,7 +370,7 @@ export const authRoutes: FastifyPluginAsync = async (fastify: FastifyInstance) =
 
       return reply.send({
         success: true,
-        txHash: signature,
+        signature: signature,
         deadline: deadline.toString(),
         nonce: claimNonce.toString(),
         pubkey: account.address

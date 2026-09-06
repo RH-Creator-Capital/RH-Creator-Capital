@@ -1,5 +1,11 @@
 # RH Creator Capital
 
+## Deployed Contracts
+
+- **Protocol Smart Contract:** [![Protocol Contract](https://img.shields.io/badge/0x4D60294F7CF93822bb8A058eD5a53DeA71B2598d-blue?style=for-the-badge&logo=ethereum&logoColor=white)](https://robinhoodchain.blockscout.com/address/0x4D60294F7CF93822bb8A058eD5a53DeA71B2598d)
+- **$RCC Token CA:** [![RCC Token](https://img.shields.io/badge/0x53314afa5b43ed4f398bb9cb7a9e532248b765cd-blue?style=for-the-badge&logo=ethereum&logoColor=white)](https://robinhoodchain.blockscout.com/token/0x53314afa5b43ed4f398bb9cb7a9e532248b765cd)
+
+---
 
 > **Disclaimer:**  It is not financial advice, does not promote any "pump and dump" schemes, and should not be used to facilitate illegal financial activities or market manipulation.
 

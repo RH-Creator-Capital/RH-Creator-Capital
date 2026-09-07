@@ -1,5 +1,5 @@
 import { FastifyInstance, FastifyPluginAsync } from "fastify";
-import { db, creatorMarkets } from "@creator-capital/db";
+import { db, creatorMarkets, callouts } from "@creator-capital/db";
 import { sql, desc, eq, and } from "drizzle-orm";
 
 export const marketRoutes: FastifyPluginAsync = async (fastify: FastifyInstance) => {
@@ -152,9 +152,44 @@ export const marketRoutes: FastifyPluginAsync = async (fastify: FastifyInstance)
     }
   });
 
+  fastify.get("/:marketId/callouts", async (request, reply) => {
+    try {
+      const { marketId } = request.params as { marketId: string };
+      
+      const marketCallouts = await db.query.callouts.findMany({
+        where: (callouts, { eq, and }) => and(eq(callouts.network, network), eq(callouts.marketId, marketId)),
+        orderBy: (callouts, { desc }) => [desc(callouts.timestamp)],
+      });
+      
+      return reply.send({ success: true, callouts: marketCallouts });
+    } catch (err) {
+      fastify.log.error(err);
+      return reply.status(500).send({ success: false, error: "Failed to fetch callouts" });
+    }
+  });
 
+  fastify.post("/:marketId/callouts", async (request, reply) => {
+    try {
+      const { marketId } = request.params as { marketId: string };
+      const body = request.body as { walletAddress: string, message: string };
+      
+      if (!body.walletAddress || !body.message) {
+        return reply.status(400).send({ success: false, error: "Missing required fields" });
+      }
 
-  fastify.get("/:marketId/analytics", async (request, reply) => {
+      await db.insert(callouts).values({
+        network,
+        marketId,
+        walletAddress: body.walletAddress,
+        message: body.message,
+      });
+
+      return reply.send({ success: true, message: "Callout posted successfully" });
+    } catch (err) {
+      fastify.log.error(err);
+      return reply.status(500).send({ success: false, error: "Failed to post callout" });
+    }
+  });  fastify.get("/:marketId/analytics", async (request, reply) => {
     try {
       const { marketId } = request.params as { marketId: string };
       

@@ -137,3 +137,12 @@ export const pscBurns = pgTable("psc_burns", {
   amount: bigint("amount", { mode: "number" }).notNull(), // RCC tokens burned
   timestamp: timestamp("timestamp").defaultNow().notNull(),
 });
+
+export const callouts = pgTable("callouts", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  network: text("network").notNull().default("devnet"),
+  marketId: text("market_id").notNull(),
+  walletAddress: text("wallet_address").notNull(),
+  message: text("message").notNull(),
+  timestamp: timestamp("timestamp").defaultNow().notNull(),
+});

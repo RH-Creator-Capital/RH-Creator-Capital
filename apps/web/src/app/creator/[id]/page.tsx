@@ -4,6 +4,8 @@ import { TradingWidget } from "@/components/TradingWidget";
 import { ChartComponent } from "@/components/ChartComponent";
 import { TradeHistoryComponent } from "@/components/TradeHistoryComponent";
 import { CreatorDashboard } from "@/components/CreatorDashboard";
+import { CalloutFeed } from "@/components/CalloutFeed";
+import { CalloutModal } from "@/components/CalloutModal";
 import { use, useState, useEffect } from "react";
 import useSWR from "swr";
 import { useCreatorCapital } from "../../../hooks/useCreatorCapital";
@@ -36,6 +38,8 @@ export default function CreatorPage({ params }: PageProps) {
   const [chartResolution, setChartResolution] = useState("5m");
   const [chartType, setChartType] = useState<'area' | 'candle'>('area');
   const [keyBalance, setKeyBalance] = useState<number>(0);
+  const [feedTab, setFeedTab] = useState<'trades' | 'callouts'>('trades');
+  const [isCalloutModalOpen, setIsCalloutModalOpen] = useState(false);
 
   useEffect(() => {
     if (!publicKey || !sdk || !id) return;
@@ -282,6 +286,7 @@ export default function CreatorPage({ params }: PageProps) {
           </>
         )}
         
+
         <div className="flex flex-col md:flex-row md:justify-between gap-6 relative z-10">
           <div className="flex flex-col sm:flex-row items-start gap-5">
             <div className="relative shrink-0">
@@ -402,8 +407,13 @@ export default function CreatorPage({ params }: PageProps) {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 flex flex-col gap-6">
           {/* Main Chart */}
-          <section className="bg-background border border-color-border pt-5 rounded-xl shadow-lg hover:border-white/50 transition-colors group overflow-hidden flex flex-col">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-5 px-5">
+          <section id="callout-target" className="bg-background border border-color-border pt-5 rounded-xl shadow-lg hover:border-white/50 transition-colors group overflow-hidden flex flex-col relative">
+            {/* Watermark for image capture */}
+            <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none z-0">
+              <span className="text-8xl font-black italic tracking-tighter">RH CREATOR CAPITAL</span>
+            </div>
+            
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-5 px-5 relative z-10">
               <div className="flex items-center gap-3">
                 <h2 className="text-[11px] font-bold text-color-muted uppercase tracking-[0.15em]">PRICE HISTORY</h2>
                 {publicKey && (
@@ -461,15 +471,40 @@ export default function CreatorPage({ params }: PageProps) {
                 </div>
               </div>
             </div>
-            <div className="w-full bg-[#07090c] border-t border-color-border h-[400px]">
+            <div className="w-full bg-[#07090c] border-t border-color-border h-[400px] relative z-10">
               <ChartComponent marketId={id} resolution={chartResolution} chartType={chartType} />
+            </div>
+            
+            {/* Embedded Stats for the generated image (hidden normally, visible when capturing if needed, but we just capture the chart for now) */}
+            <div className="hidden absolute bottom-4 left-4 p-4 bg-black/80 rounded-lg border border-white/10 z-20" id="callout-stats">
+               <div className="font-bold text-white text-lg">{creatorName}</div>
+               <div className="text-color-buy font-mono text-sm">MCAP: {mcap} ETH</div>
             </div>
           </section>
 
-          {/* Trade History */}
-          <section className="bg-background border border-color-border p-5 rounded-xl shadow-lg hover:border-white/50 transition-colors group">
-            <h2 className="text-[11px] font-bold text-color-muted uppercase tracking-[0.15em] mb-5">RECENT TRADES</h2>
-            <TradeHistoryComponent marketId={id} />
+          {/* Feed Tabs: Trades vs Thread */}
+          <section className="bg-background border border-color-border pt-4 rounded-xl shadow-lg hover:border-white/50 transition-colors group overflow-hidden">
+            <div className="flex gap-6 px-5 border-b border-color-border">
+              <button 
+                onClick={() => setFeedTab('trades')}
+                className={`pb-3 text-[11px] font-bold uppercase tracking-[0.15em] transition-colors border-b-2 relative top-[1px] ${feedTab === 'trades' ? 'text-white border-white' : 'text-color-muted border-transparent hover:text-white'}`}
+              >
+                Recent Trades
+              </button>
+              <button 
+                onClick={() => setFeedTab('callouts')}
+                className={`pb-3 text-[11px] font-bold uppercase tracking-[0.15em] transition-colors border-b-2 relative top-[1px] flex items-center gap-1.5 ${feedTab === 'callouts' ? 'text-white border-white' : 'text-color-muted border-transparent hover:text-white'}`}
+              >
+                Thread <span className="bg-white/10 px-1.5 py-0.5 rounded text-[9px] text-white">LIVE</span>
+              </button>
+            </div>
+            {feedTab === 'trades' ? (
+              <div className="p-5">
+                <TradeHistoryComponent marketId={id} />
+              </div>
+            ) : (
+              <CalloutFeed marketId={id} />
+            )}
           </section>
         </div>
 
@@ -638,6 +673,23 @@ export default function CreatorPage({ params }: PageProps) {
           )}
         </div>
       </div>
+
+      {/* Floating Callout Button */}
+      <button
+        onClick={() => setIsCalloutModalOpen(true)}
+        className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-40 flex items-center gap-2 bg-color-buy hover:opacity-90 text-[#07090c] transition-all px-5 py-3 rounded-full text-sm font-bold shadow-[0_0_25px_rgba(34,197,94,0.4)] hover:shadow-[0_0_30px_rgba(34,197,94,0.6)] hover:scale-105 active:scale-95"
+      >
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path>
+        </svg>
+        Callout
+      </button>
+      <CalloutModal 
+        isOpen={isCalloutModalOpen} 
+        onClose={() => setIsCalloutModalOpen(false)} 
+        targetId="callout-target"
+        text={`I'm incredibly bullish on ${creatorName}'s market on RH Creator Capital! 🚀\n\nMCAP: ${mcap} ETH\nCheck out the chart: ${typeof window !== 'undefined' ? window.location.href : ''}`}
+      />
     </div>
   );
 }

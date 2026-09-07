@@ -1,11 +1,11 @@
 "use client";
 
-import { createChart, ColorType, ISeriesApi, Time, CandlestickSeries } from 'lightweight-charts';
+import { createChart, ColorType, ISeriesApi, Time, AreaSeries, CandlestickSeries } from 'lightweight-charts';
 import React, { useEffect, useRef, useState } from 'react';
 
-export const ChartComponent = ({ marketId, resolution = "1m" }: { marketId: string, resolution?: string }) => {
+export const ChartComponent = ({ marketId, resolution = "1m", chartType = "area" }: { marketId: string, resolution?: string, chartType?: 'area' | 'candle' }) => {
   const chartContainerRef = useRef<HTMLDivElement>(null);
-  const candlestickSeriesRef = useRef<ISeriesApi<"Candlestick"> | null>(null);
+  const seriesRef = useRef<ISeriesApi<any> | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isEmpty, setIsEmpty] = useState(false);
 
@@ -38,20 +38,36 @@ export const ChartComponent = ({ marketId, resolution = "1m" }: { marketId: stri
       }
     });
 
-    const candlestickSeries = chart.addSeries(CandlestickSeries, {
-      upColor: '#22c55e', // text-color-buy
-      downColor: '#ef4444', // text-color-sell
-      borderVisible: false,
-      wickUpColor: '#22c55e',
-      wickDownColor: '#ef4444',
-      priceFormat: {
-        type: 'price',
-        precision: 9,
-        minMove: 0.000000001,
-      },
-    });
+    let activeSeries: ISeriesApi<any>;
 
-    candlestickSeriesRef.current = candlestickSeries;
+    if (chartType === 'area') {
+      activeSeries = chart.addSeries(AreaSeries, {
+        lineColor: '#22c55e', // Theme color green
+        topColor: 'rgba(34, 197, 94, 0.4)', // Faded green at the top
+        bottomColor: 'rgba(34, 197, 94, 0.0)', // Completely transparent at the bottom
+        lineWidth: 2,
+        priceFormat: {
+          type: 'price',
+          precision: 9,
+          minMove: 0.000000001,
+        },
+      });
+    } else {
+      activeSeries = chart.addSeries(CandlestickSeries, {
+        upColor: '#22c55e', // text-color-buy
+        downColor: '#ef4444', // text-color-sell
+        borderVisible: false,
+        wickUpColor: '#22c55e',
+        wickDownColor: '#ef4444',
+        priceFormat: {
+          type: 'price',
+          precision: 9,
+          minMove: 0.000000001,
+        },
+      });
+    }
+
+    seriesRef.current = activeSeries;
 
     // Fetch initial historical candles
     const API_URL = process.env.NEXT_PUBLIC_API_URL as string;
@@ -59,14 +75,23 @@ export const ChartComponent = ({ marketId, resolution = "1m" }: { marketId: stri
       .then(res => res.json())
       .then(data => {
         if (data.success && data.candles) {
-          const formattedData = data.candles.map((c: any) => ({
-            time: Math.floor(new Date(c.timestamp).getTime() / 1000) as Time,
-            open: Number(c.open) / 1e18,
-            high: Number(c.high) / 1e18,
-            low: Number(c.low) / 1e18,
-            close: Number(c.close) / 1e18,
-          }));
-          candlestickSeries.setData(formattedData);
+          const formattedData = data.candles.map((c: any) => {
+            const time = Math.floor(new Date(c.timestamp).getTime() / 1000) as Time;
+            if (chartType === 'area') {
+              return { time, value: Number(c.close) / 1e18 };
+            } else {
+              return {
+                time,
+                open: Number(c.open) / 1e18,
+                high: Number(c.high) / 1e18,
+                low: Number(c.low) / 1e18,
+                close: Number(c.close) / 1e18,
+              };
+            }
+          });
+
+          activeSeries.setData(formattedData);
+
           if (formattedData.length > 0) {
             setIsEmpty(false);
             // Prevent extreme zoom when there are very few data points
@@ -109,13 +134,18 @@ export const ChartComponent = ({ marketId, resolution = "1m" }: { marketId: stri
         if (msg.type === "candle_update" && msg.data) {
           const c = msg.data;
           try {
-            candlestickSeries.update({
-              time: Math.floor(new Date(c.timestamp).getTime() / 1000) as Time,
-              open: Number(c.open) / 1e18,
-              high: Number(c.high) / 1e18,
-              low: Number(c.low) / 1e18,
-              close: Number(c.close) / 1e18,
-            });
+            const time = Math.floor(new Date(c.timestamp).getTime() / 1000) as Time;
+            if (chartType === 'area') {
+              activeSeries.update({ time, value: Number(c.close) / 1e18 });
+            } else {
+              activeSeries.update({
+                time,
+                open: Number(c.open) / 1e18,
+                high: Number(c.high) / 1e18,
+                low: Number(c.low) / 1e18,
+                close: Number(c.close) / 1e18,
+              });
+            }
             setIsEmpty(false);
           } catch (updateErr) {
             console.warn("Skipping outdated candle update");
@@ -142,7 +172,7 @@ export const ChartComponent = ({ marketId, resolution = "1m" }: { marketId: stri
       ws.close();
       chart.remove();
     };
-  }, [marketId, resolution]);
+  }, [marketId, resolution, chartType]);
 
   return (
     <div className="relative w-full h-[300px] md:h-[400px]">
@@ -152,10 +182,11 @@ export const ChartComponent = ({ marketId, resolution = "1m" }: { marketId: stri
         #tv-attr-logo { display: none !important; }
         .tv-lightweight-charts table ~ div > a { display: none !important; }
       `}} />
+      
       <div className={`w-full h-full ${isLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300`} ref={chartContainerRef} />
 
       {isLoading && (
-        <div className="absolute inset-0 p-4">
+        <div className="absolute inset-0 p-4 pt-14">
           <div className="w-full h-full bg-white/5 rounded-lg animate-pulse" />
         </div>
       )}

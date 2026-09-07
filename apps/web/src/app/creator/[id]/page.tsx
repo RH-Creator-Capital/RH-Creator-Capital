@@ -34,6 +34,7 @@ export default function CreatorPage({ params }: PageProps) {
   const [onChainMarket, setOnChainMarket] = useState<any>(null);
   const [isChainLoading, setIsChainLoading] = useState(true);
   const [chartResolution, setChartResolution] = useState("5m");
+  const [chartType, setChartType] = useState<'area' | 'candle'>('area');
   const [keyBalance, setKeyBalance] = useState<number>(0);
 
   useEffect(() => {
@@ -411,31 +412,57 @@ export default function CreatorPage({ params }: PageProps) {
                   </span>
                 )}
               </div>
-              <div className="flex gap-1.5">
-                <button 
-                  onClick={() => setChartResolution("1m")}
-                  className={chartResolution === "1m" ? "text-white font-semibold bg-black border border-color-border rounded-lg text-xs px-2.5 py-1" : "text-color-muted hover:bg-white/5 rounded-lg text-xs px-2.5 py-1 transition-colors"}
-                >1M</button>
-                <button 
-                  onClick={() => setChartResolution("5m")}
-                  className={chartResolution === "5m" ? "text-white font-semibold bg-black border border-color-border rounded-lg text-xs px-2.5 py-1" : "text-color-muted hover:bg-white/5 rounded-lg text-xs px-2.5 py-1 transition-colors"}
-                >5M</button>
-                <button 
-                  onClick={() => setChartResolution("15m")}
-                  className={chartResolution === "15m" ? "text-white font-semibold bg-black border border-color-border rounded-lg text-xs px-2.5 py-1" : "text-color-muted hover:bg-white/5 rounded-lg text-xs px-2.5 py-1 transition-colors"}
-                >15M</button>
-                <button 
-                  onClick={() => setChartResolution("1h")}
-                  className={chartResolution === "1h" ? "text-white font-semibold bg-black border border-color-border rounded-lg text-xs px-2.5 py-1" : "text-color-muted hover:bg-white/5 rounded-lg text-xs px-2.5 py-1 transition-colors"}
-                >1H</button>
-                <button 
-                  onClick={() => setChartResolution("1d")}
-                  className={chartResolution === "1d" ? "text-white font-semibold bg-black border border-color-border rounded-lg text-xs px-2.5 py-1" : "text-color-muted hover:bg-white/5 rounded-lg text-xs px-2.5 py-1 transition-colors"}
-                >1D</button>
+              <div className="flex flex-col sm:flex-row items-end sm:items-center gap-3">
+                {/* Chart Type Tabs (Styled like Buy/Sell Tabs) */}
+                <div className="flex gap-1.5 bg-[#07090c] p-1.5 rounded-lg border border-color-border w-full sm:w-auto">
+                  <button 
+                    onClick={() => setChartType('area')}
+                    className={`flex-1 sm:flex-none px-4 py-1.5 text-center font-semibold text-xs rounded-md transition-all ${
+                      chartType === 'area' 
+                        ? 'bg-white text-[#07090c] shadow-sm' 
+                        : 'text-color-muted hover:text-white'
+                    }`}
+                  >
+                    Area
+                  </button>
+                  <button 
+                    onClick={() => setChartType('candle')}
+                    className={`flex-1 sm:flex-none px-4 py-1.5 text-center font-semibold text-xs rounded-md transition-all ${
+                      chartType === 'candle' 
+                        ? 'bg-white text-[#07090c] shadow-sm' 
+                        : 'text-color-muted hover:text-white'
+                    }`}
+                  >
+                    Candle
+                  </button>
+                </div>
+
+                <div className="flex gap-1.5">
+                  <button 
+                    onClick={() => setChartResolution("1m")}
+                    className={chartResolution === "1m" ? "text-white font-semibold bg-black border border-color-border rounded-lg text-xs px-2.5 py-1" : "text-color-muted hover:bg-white/5 rounded-lg text-xs px-2.5 py-1 transition-colors"}
+                  >1M</button>
+                  <button 
+                    onClick={() => setChartResolution("5m")}
+                    className={chartResolution === "5m" ? "text-white font-semibold bg-black border border-color-border rounded-lg text-xs px-2.5 py-1" : "text-color-muted hover:bg-white/5 rounded-lg text-xs px-2.5 py-1 transition-colors"}
+                  >5M</button>
+                  <button 
+                    onClick={() => setChartResolution("15m")}
+                    className={chartResolution === "15m" ? "text-white font-semibold bg-black border border-color-border rounded-lg text-xs px-2.5 py-1" : "text-color-muted hover:bg-white/5 rounded-lg text-xs px-2.5 py-1 transition-colors"}
+                  >15M</button>
+                  <button 
+                    onClick={() => setChartResolution("1h")}
+                    className={chartResolution === "1h" ? "text-white font-semibold bg-black border border-color-border rounded-lg text-xs px-2.5 py-1" : "text-color-muted hover:bg-white/5 rounded-lg text-xs px-2.5 py-1 transition-colors"}
+                  >1H</button>
+                  <button 
+                    onClick={() => setChartResolution("1d")}
+                    className={chartResolution === "1d" ? "text-white font-semibold bg-black border border-color-border rounded-lg text-xs px-2.5 py-1" : "text-color-muted hover:bg-white/5 rounded-lg text-xs px-2.5 py-1 transition-colors"}
+                  >1D</button>
+                </div>
               </div>
             </div>
             <div className="w-full bg-[#07090c] border-t border-color-border h-[400px]">
-              <ChartComponent marketId={id} resolution={chartResolution} />
+              <ChartComponent marketId={id} resolution={chartResolution} chartType={chartType} />
             </div>
           </section>
 
